@@ -300,20 +300,20 @@ module.exports.photosInfo = [
     joinedOn: "16.02.2018"
   },
 
-  // {
-  //   firstName: 'Packia Sheela ',
-  //   lastName: 'Varadhan',
-  //   title: 'Trainee at Integrify',
-  //   nationality: 'Finnish',
-  //   src: '',
-  //   alt: '',
-  //   skills: ['HTML', 'CSS', 'Java Script'],
-  //   whySofterDeveloper: 'to get a good job',
-  //   longTermVision: 'to be a good Developer',
-  //   motivatesMe: 'new technologies motivates me to learn more ',
-  //   favoriteQuote: 'learn more ,work hard ',
-  //   joinedOn: ''
-  // },
+  {
+    firstName: "Packia Sheela ",
+    lastName: "Varadhan",
+    title: "Trainee at Integrify",
+    nationality: "Finnish",
+    src: "Packia.jpg",
+    alt: "Packia",
+    skills: ["HTML", "CSS", "Java Script"],
+    whySofterDeveloper: "to get a good job",
+    longTermVision: "to be a good Developer",
+    motivatesMe: "new technologies motivates me to learn more ",
+    favoriteQuote: "learn more ,work hard ",
+    joinedOn: ""
+  },
   // {
   //   firstName: 'Trung',
   //   lastName: 'Hoang',
@@ -427,7 +427,7 @@ module.exports.photosInfo = [
     lastName: "Nguyen",
     title: "Integrify Trainee",
     nationality: "Vietnam",
-    src: "Archillect.jpg",
+    src: "Phuoc.jpg",
     alt: "[archive + intellect]",
     skills: ["HTML/CSS", "JavaScript", "React.js", "Java"],
     whySofterDeveloper: "Progressive work environment",
@@ -629,7 +629,7 @@ module.exports.photosInfo = [
     lastName: "Bakos",
     title: "Trainee",
     nationality: "Hungarian",
-    src: "Bakos.jpg",
+    src: "Zsuzsanna.jpg",
     alt: "Zsuzsanna Bakos",
     Skills: ["HTML", "CSS", "JavaScript", "Bootstrap", "AutoCad 3D"],
     whySofterDeveloper:
