@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const app = express();
 const data = require("./photosinfo.js");
 let students = data.photosInfo;
+const port = process.env.PORT || 8080;
 
 app.set("views", path.join(__dirname, "views"));
 
@@ -117,6 +118,6 @@ app.delete("/students/:firstName", (req, res) => {
   }
 });
 
-app.listen(8080, () => {
-  console.log("Server is running on port 8080....");
+app.listen(port, () => {
+  console.log("Server is running on port" + port);
 });
