@@ -44,7 +44,7 @@ module.exports.photosInfo = [
     lastName: "Maljici",
     title: "Junior Javascript Developer ",
     nationality: "Serbian",
-    Src: "Senad.jpg",
+    src: "Senad.jpg",
     alt: "Senad",
     skills: ["HTML5", "CSS3", "Javascript", "PHP", "SQL"],
     whySofterDeveloper: "Making money while having fun",
@@ -86,20 +86,20 @@ module.exports.photosInfo = [
     favoriteQuote: "",
     joinedOn: "04.12.2017"
   },
-  // {
-  //   firstName: 'Pragya',
-  //   lastName: 'Gupta',
-  //   title: 'Junior Web Developer',
-  //   nationality: 'Indian',
-  //   src: 'Pragya.jpg',
-  //   alt: 'Pragya',
-  //   skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Redux'],
-  //   whySofterDeveloper: 'Engineering Creativity',
-  //   longTermVision: 'Entrepreneur',
-  //   motivatesMe: 'I Love Coding',
-  //   favoriteQuote: 'Work is worship',
-  //   joinedOn: '04-12-2017'
-  // },
+  {
+    firstName: "Pragya",
+    lastName: "Gupta",
+    title: "Junior Web Developer",
+    nationality: "Indian",
+    src: "Pragya.jpg",
+    alt: "Pragya",
+    skills: ["HTML", "CSS", "JavaScript", "React", "Redux"],
+    whySofterDeveloper: "Engineering Creativity",
+    longTermVision: "Entrepreneur",
+    motivatesMe: "I Love Coding",
+    favoriteQuote: "Work is worship",
+    joinedOn: "04.12.2017"
+  },
   {
     firstName: "Mohammed",
     lastName: "Mansoor",
@@ -414,7 +414,7 @@ module.exports.photosInfo = [
     title: "Trainee",
     nationality: "Vietnam",
     src: "Hai.jpg",
-    Alt: "happy ximbong",
+    alt: "happy ximbong",
     skills: ["Javascript", "Java", "Linear Algebra", "Discrete Maths"],
     whySofterDeveloper: "SW developer title is cool to have",
     longTermVision: "Machine learning/ Data science",
@@ -422,21 +422,21 @@ module.exports.photosInfo = [
     favoriteQuote: "Whether you think you can or you can't, you're right",
     joinedOn: "16.04.2018"
   },
-  // {
-  //   firstName: 'Phuoc',
-  //   lastName: 'Nguyen',
-  //   title: 'Integrify Trainee',
-  //   nationality: 'Vietnam',
-  //   src: 'Archillect.jpg',
-  //   Alt: '[archive + intellect]',
-  //   skills: ['HTML/CSS', 'JavaScript', 'React.js', 'Java'],
-  //   whySofterDeveloper: 'Progressive work environment',
-  //   longTermVision: 'Full-stack developer/Data scientist',
-  //   motivatesMe: 'Modern technologies in web dev and data science',
-  //   favoriteQuote:
-  //     "The problem is that there's no standardized API for messages between humans. - mpjme",
-  //   joinedOn: '30.04.2018'
-  // },
+  {
+    firstName: "Phuoc",
+    lastName: "Nguyen",
+    title: "Integrify Trainee",
+    nationality: "Vietnam",
+    src: "Archillect.jpg",
+    alt: "[archive + intellect]",
+    skills: ["HTML/CSS", "JavaScript", "React.js", "Java"],
+    whySofterDeveloper: "Progressive work environment",
+    longTermVision: "Full-stack developer/Data scientist",
+    motivatesMe: "Modern technologies in web dev and data science",
+    favoriteQuote:
+      "The problem is that there's no standardized API for messages between humans. - mpjme",
+    joinedOn: "30.04.2018"
+  },
   {
     firstName: "Andrew",
     lastName: "Zheng",
@@ -624,22 +624,22 @@ module.exports.photosInfo = [
     joinedOn: "16.04.2018"
   },
 
-  // {
-  //   firstName: 'Zsuzsanna',
-  //   lastName: 'Bakos',
-  //   title: 'Trainee',
-  //   nationality: 'Hungarian',
-  //   src: 'Bakos.jpg',
-  //   alt: 'Zsuzsanna Bakos',
-  //   Skills: ['HTML', 'CSS', 'JavaScript', 'Bootstrap', 'AutoCad 3D'],
-  //   whySofterDeveloper:
-  //     'I like to create creative design and to challenge myself with new things',
-  //   longTermVision: 'To be a unique Web-Designer',
-  //   motivatesMe:
-  //     'The really challenging Integrify course and the help what I get',
-  //   favoriteQuote: 'Free willing',
-  //   joinedOn: '22-05-2018'
-  // },
+  {
+    firstName: "Zsuzsanna",
+    lastName: "Bakos",
+    title: "Trainee",
+    nationality: "Hungarian",
+    src: "Bakos.jpg",
+    alt: "Zsuzsanna Bakos",
+    Skills: ["HTML", "CSS", "JavaScript", "Bootstrap", "AutoCad 3D"],
+    whySofterDeveloper:
+      "I like to create creative design and to challenge myself with new things",
+    longTermVision: "To be a unique Web-Designer",
+    motivatesMe:
+      "The really challenging Integrify course and the help what I get",
+    favoriteQuote: "Free willing",
+    joinedOn: "22.05.2018"
+  },
 
   {
     firstName: "Khanh",
