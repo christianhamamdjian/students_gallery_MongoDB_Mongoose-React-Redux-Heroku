@@ -42,10 +42,15 @@ input[type="file"]:hover {
 }
 input[type="text"] {
   min-width: 80%;
+  background: #d7e5f7;
+  border: 0;
+  height: 25px;
+  padding: 6px;
 }
 fieldset {
   width: 70%;
   margin-left: 40px;
+  padding: 40px;
 }
 .card {
   margin: 0 auto;
