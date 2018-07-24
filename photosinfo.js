@@ -86,20 +86,20 @@ module.exports.photosInfo = [
     favoriteQuote: "",
     joinedOn: "04.12.2017"
   },
-  {
-    firstName: "Pragya",
-    lastName: "Gupta",
-    title: "Junior Web Developer",
-    nationality: "Indian",
-    src: "Pragya.jpg",
-    alt: "Pragya",
-    skills: ["HTML", "CSS", "JavaScript", "React", "Redux"],
-    whySofterDeveloper: "Engineering Creativity",
-    longTermVision: "Entrepreneur",
-    motivatesMe: "I Love Coding",
-    favoriteQuote: "Work is worship",
-    joinedOn: "04.12.2017"
-  },
+  // {
+  //   firstName: "Pragya",
+  //   lastName: "Gupta",
+  //   title: "Junior Web Developer",
+  //   nationality: "Indian",
+  //   src: "Pragya.jpg",
+  //   alt: "Pragya",
+  //   skills: ["HTML", "CSS", "JavaScript", "React", "Redux"],
+  //   whySofterDeveloper: "Engineering Creativity",
+  //   longTermVision: "Entrepreneur",
+  //   motivatesMe: "I Love Coding",
+  //   favoriteQuote: "Work is worship",
+  //   joinedOn: "04.12.2017"
+  // },
   {
     firstName: "Mohammed",
     lastName: "Mansoor",
