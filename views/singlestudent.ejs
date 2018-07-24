@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" href="/styles.css" type="text/css">
+
+</head>
+
+<body>
+    <a href="/">
+        <button>Back to gallery</button>
+    </a>
+    <form action="/students/<%= student.firstName %>?_method=DELETE" method="POST">
+        <button>Delete</button>
+    </form>
+    <div class="card">
+        <h1>
+            <strong>Name:</strong>
+            <%= student.firstName %>
+                <%= student.lastName %>
+        </h1>
+        <img width=300 src="/<%= student.src %>">
+        <div>
+            <strong>Title:</strong>
+            <%= student.title %>
+        </div>
+        <div>
+            <strong>Nationality:</strong>
+            <%= student.nationality %>
+        </div>
+        <div>
+            <strong>Skills:</strong>
+            <% for(let skill of student.skills){ %>
+                <li>
+                    <%= skill %>
+                </li>
+                <% } %>
+        </div>
+        <div>
+            <strong>Why a software developer:</strong>
+            <%= student.whySofterDeveloper %>
+        </div>
+        <div>
+            <strong>Long term vision:</strong>
+            <%= student.longTermVision %>
+        </div>
+        <div>
+            <strong>What motivates me:</strong>
+            <%= student.motivatesMe %>
+        </div>
+        <div>
+            <strong>Favorite quote:</strong>
+            <%= student.favoriteQuote %>
+        </div>
+        <div>
+            <strong>Joined on:</strong>
+            <%= student.joinedOn %>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

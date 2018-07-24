@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add new student</title>
+    <link rel="stylesheet" href="/styles.css" type="text/css">
+
+</head>
+
+<body>
+
+    <h1>Add new student</h1>
+    <a href="/">
+        <button>Cancel</button>
+    </a>
+    <form class="form" action="/newstudent" enctype="multipart/form-data" method="POST">
+        <fieldset>
+            <label for="photo">Photo:</label>
+            <br>
+            <input id="photo" name="photo" type="file" multiple="multiple" placeholder="Upload your photo">
+            <br>
+            <br>
+            <label for="firstName">First name:</label>
+            <br>
+            <input id="firstName" name="firstName" type="text" placeholder="First name">
+            <br>
+            <br>
+
+            <label for="lastName">Last name:</label>
+            <br>
+
+            <input id="lastName" name="lastName" type="text" placeholder="Last name">
+            <br>
+            <br>
+
+            <label for="title">Title:</label>
+            <br>
+
+            <input id="title" name="title" type="text" placeholder="Title">
+            <br>
+            <br>
+            <label for="nationality">Nationality:</label>
+            <br>
+
+            <input id="nationality" name="nationality" type="text" placeholder="Nationality">
+            <br>
+            <br>
+            <label for="skills">Skills:</label>
+            <br>
+
+            <input id="skills" name="skills" type="text" placeholder="Skills">
+            <br>
+            <br>
+            <label for="whySofterDeveloper">Why a software developer:</label>
+            <br>
+
+            <input id="whySofterDeveloper" name="whySofterDeveloper" type="text" placeholder="Why a software developer">
+            <br>
+            <br>
+            <label for="longTermVision">Long term vision:</label>
+            <br>
+
+            <input id="longTermVision" name="longTermVision" type="text" placeholder="Long term vision">
+            <br>
+            <br>
+            <label for="motivatesMe">What motivates me:</label>
+            <br>
+
+            <input id="motivatesMe" name="motivatesMe" type="text" placeholder="What motivates me">
+            <br>
+            <br>
+            <label for="favoriteQuote">Favorite quote:</label>
+            <br>
+
+            <input id="favoriteQuote" name="favoriteQuote" type="text" placeholder="Favorite quote">
+            <br>
+            <br>
+            <label for="joinedOn">Joined on:</label>
+            <br>
+
+            <input id="joinedOn" name="joinedOn" type="text" placeholder="Joined on">
+            <br>
+            <br>
+
+            <input type="submit" value="Send">
+        </fieldset>
+    </form>
+</body>
+
+</html>

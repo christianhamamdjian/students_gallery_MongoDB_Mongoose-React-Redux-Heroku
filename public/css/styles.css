@@ -1,0 +1,53 @@
+body {
+  background: rgb(104, 102, 102);
+  font-family: sans-serif;
+  color: #fff;
+}
+a {
+  text-decoration: none;
+}
+
+.gallery li {
+  list-style: none;
+  display: inline-block;
+  margin: 40px;
+}
+.image-frame {
+  height: 300px;
+  width: 300px;
+  overflow: hidden;
+  border: 1px solid #a4a9af;
+}
+h2 {
+  color: #fff;
+}
+button,
+input[type="submit"],
+input[type="file"] {
+  background-color: #1eb4ef;
+  border: 1px solid #a4a9af;
+  color: #5d6164;
+  padding: 20px;
+  font-size: 0.9em;
+  font-weight: 600;
+  margin: 20px;
+  cursor: pointer;
+  width: 220px;
+}
+button:hover,
+input[type="submit"]:hover,
+input[type="file"]:hover {
+  background-color: #fd7b7b;
+  border: 1px solid transparent;
+}
+input[type="text"] {
+  min-width: 80%;
+}
+fieldset {
+  width: 70%;
+  margin-left: 40px;
+}
+.card {
+  margin: 0 auto;
+  width: 50%;
+}
