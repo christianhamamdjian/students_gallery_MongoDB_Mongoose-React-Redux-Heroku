@@ -72,9 +72,8 @@ app.get("/", (req, res) => {
         .find()
         .toArray()
         .then(
-          allStudents => {
-            res.render("index", { students: allStudents });
-            // console.log(allStudents);
+          student => {
+            res.render("index", { students: student });
           },
           err => {}
         );
@@ -90,17 +89,17 @@ app.get("/students/:id", (req, res) => {
       const db = client.db("StudentInfo");
 
       let flag = false;
-      const studentId = req.params.id;
-      console.log(studentId);
+      const StudentId = req.params.id;
+
       db.collection("Students")
         .find()
         .toArray()
         .then(
-          allStudents => {
-            for (let i = 0; i < allStudents.length; i++) {
-              if (allStudents[i]._id === studentId) {
+          student => {
+            for (let i = 0; i < student.length; i++) {
+              if (student[i]._id === StudentId) {
                 res.render("singlestudent", {
-                  student: allStudents[i]._id
+                  student: student[i]._id
                 });
                 console.log({ student: student[i]._id });
                 flag = true;
@@ -110,7 +109,7 @@ app.get("/students/:id", (req, res) => {
             }
 
             if (!flag) {
-              res.send(`Student n. ${_id} was not found.`);
+              // res.send(`Student n. ${firstName} was not found.`);
             }
           },
           err => {}

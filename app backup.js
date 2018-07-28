@@ -6,8 +6,8 @@ const path = require("path");
 const { MongoClient, ObjectID } = require("mongodb");
 const methodOverride = require("method-override");
 const app = express();
-// const myData = require("./photosinfo.js");
-// let students = myData.photosInfo;
+const myData = require("./photosinfo.js");
+let students = myData.photosInfo;
 // const port = process.env.PORT || 8080;
 const port = 8080;
 
@@ -72,9 +72,8 @@ app.get("/", (req, res) => {
         .find()
         .toArray()
         .then(
-          allStudents => {
-            res.render("index", { students: allStudents });
-            // console.log(allStudents);
+          doc => {
+            res.render("index", { students: doc });
           },
           err => {}
         );
@@ -83,42 +82,22 @@ app.get("/", (req, res) => {
     }
   );
 });
-app.get("/students/:id", (req, res) => {
-  MongoClient.connect(
-    "mongodb://localhost:27017/StudentInfo",
-    (err, client) => {
-      const db = client.db("StudentInfo");
+app.get("/students/:firstName", (req, res) => {
+  let flag = false;
+  const firstName = req.params.firstName;
+  for (let i = 0; i < students.length; i++) {
+    if (students[i].firstName === firstName) {
+      res.render("singlestudent", { student: students[i] });
 
-      let flag = false;
-      const studentId = req.params.id;
-      console.log(studentId);
-      db.collection("Students")
-        .find()
-        .toArray()
-        .then(
-          allStudents => {
-            for (let i = 0; i < allStudents.length; i++) {
-              if (allStudents[i]._id === studentId) {
-                res.render("singlestudent", {
-                  student: allStudents[i]._id
-                });
-                console.log({ student: student[i]._id });
-                flag = true;
+      flag = true;
 
-                break;
-              }
-            }
-
-            if (!flag) {
-              res.send(`Student n. ${_id} was not found.`);
-            }
-          },
-          err => {}
-        );
-
-      client.close();
+      break;
     }
-  );
+  }
+
+  if (!flag) {
+    res.send(`Student n. ${firstName} was not found.`);
+  }
 });
 
 app.get("/addstudent", (req, res) => {

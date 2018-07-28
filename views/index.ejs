@@ -17,7 +17,7 @@
         </a>
         <ul>
             <% for(let student of students){ %>
-                <a href="/students/<%= student.firstName %>">
+                <a href="/students/<%= student._id %>">
                     <li>
                         <div class="image-frame">
                             <img width=300 src="<%= student.src %>" onerror="this.src='img-placeholder.png'">
