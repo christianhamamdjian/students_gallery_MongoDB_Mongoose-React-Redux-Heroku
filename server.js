@@ -146,39 +146,43 @@ app.post("/api/newstudent", upload.single("photo"), (req, res) => {
     }
   );
   res.json(newStudent);
-  // res.render("newstudent", newStudent);
-  // res.end();
 });
 
 app.put("/api/update/:id", upload.single("photo"), (req, res) => {
+  console.log(req.body.alt);
   const id = req.params.id;
-  Student.findByIdAndUpdate(id, {
-    _id: id,
-    photo: req.file,
-    src: "/" + req.file.filename,
-    alt: req.file.filename,
-    firstName: req.body.newFirstName,
-    lastName: req.body.newLastName,
-    title: req.body.newTitle,
-    nationality: req.body.newNationality,
-    skills: [req.body.newSkills],
-    whySofterDeveloper: req.body.newWhySofterDeveloper,
-    longTermVision: req.body.newLongTermVision,
-    motivatesMe: req.body.newMotivatesMe,
-    favoriteQuote: req.body.newFavoriteQuote,
-    joinedOn: req.body.newJoinedOn
-  }).then(
+  let fileName = req.body.alt;
+  if (req.file) {
+    fileName = req.file.filename;
+  }
+  Student.findByIdAndUpdate(
+    id,
+    {
+      photo: req.file,
+      src: "/" + fileName,
+      alt: fileName,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      title: req.body.title,
+      nationality: req.body.nationality,
+      skills: [req.body.skills],
+      whySofterDeveloper: req.body.whySofterDeveloper,
+      longTermVision: req.body.longTermVision,
+      motivatesMe: req.body.motivatesMe,
+      favoriteQuote: req.body.favoriteQuote,
+      joinedOn: req.body.joinedOn
+    },
+    { new: true }
+  ).then(
     doc => {
       console.log("Saved");
       console.log(JSON.stringify(doc, undefined, 4));
-      res.send(doc);
+      res.json(doc);
     },
     e => {
       console.log("Unable to save", e);
     }
   );
-  res.render("updatedstudent", updatedStudent);
-  res.end();
 });
 
 app.delete("/api/:id", (req, res) => {

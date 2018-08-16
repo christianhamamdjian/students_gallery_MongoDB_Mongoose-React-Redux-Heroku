@@ -259,10 +259,12 @@ input[type="radio"]:checked + label {
   padding: 20px 60px;
   font-size: 0.9em;
   margin-top: 40px;
+  cursor: pointer;
 }
 .button:hover {
   background-color: #1eb4ef;
   border: 1px solid transparent;
+  cursor: pointer;
 }
 
 .invalid {
@@ -284,9 +286,10 @@ input[type="radio"]:checked + label {
 li {
   list-style: none;
   /* width: 50%; */
-  background: #1eb4ef;
+  background: #1580aa;
   color: #fff;
-  padding: 20px;
+  padding: 80px;
+  text-align: left;
 }
 ul {
   display: grid;
@@ -295,4 +298,18 @@ ul {
 }
 input[type="file" i] {
   color: #fff;
+}
+.button {
+  color: #fff;
+  cursor: pointer;
+}
+.buttoncancel {
+  color: #fff;
+  cursor: pointer;
+  float: right;
+}
+.buttondelete {
+  color: #fff;
+  cursor: pointer;
+  float: right;
 }

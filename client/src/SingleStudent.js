@@ -34,26 +34,53 @@ class SingleStudent extends Component {
 
     return (
       <div>
-        <NavLink to="/">Back to students gallery</NavLink>
+        <br />
+        <button className="buttondelete" onClick={this.handleDelete}>
+          Delete
+        </button>
+        <NavLink to="/">
+          <strong> Back to students gallery</strong>
+        </NavLink>
         <Link key={this.props.myId} to={"/students/edit/" + this.props.myId}>
-          <button>Edit Student</button>
+          <button className="button">Edit Student</button>
         </Link>
-        <button onClick={this.handleDelete}>Delete</button>
+
         <ul>
           <li>
             <img width="300" src={selectedStudent.src} />
             <h1>
-              {selectedStudent.firstName}
-              {selectedStudent.lastName}
+              <span>{selectedStudent.firstName} </span>
+              <span>{selectedStudent.lastName}</span>
             </h1>
             <h2>{selectedStudent.title}</h2>
-            <p>{selectedStudent.nationality}</p>
-            <p>{selectedStudent.skills}</p>
-            <p>{selectedStudent.whySofterDeveloper}</p>
-            <p>{selectedStudent.longTermVision}</p>
-            <p>{selectedStudent.motivatesMe}</p>
-            <p>{selectedStudent.favoriteQuote}</p>
-            <p>{selectedStudent.joinedOn}</p>
+            <p>
+              <strong>Nationality: </strong>
+              {selectedStudent.nationality}
+            </p>
+            <p>
+              <strong>Skills: </strong>
+              {selectedStudent.skills}
+            </p>
+            <p>
+              <strong>Why a software developer: </strong>
+              {selectedStudent.whySofterDeveloper}
+            </p>
+            <p>
+              <strong>Long term vision: </strong>
+              {selectedStudent.longTermVision}
+            </p>
+            <p>
+              <strong>What motivates me: </strong>
+              {selectedStudent.motivatesMe}
+            </p>
+            <p>
+              <strong>Favorite quote: </strong>
+              {selectedStudent.favoriteQuote}
+            </p>
+            <p>
+              <strong>Joined on: </strong>
+              {selectedStudent.joinedOn}
+            </p>
           </li>
         </ul>
       </div>

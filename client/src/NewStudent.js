@@ -34,7 +34,6 @@ class NewStudent extends Component {
 
   handleSave = e => {
     e.preventDefault();
-
     const photo = this.state.photo;
     const src = this.state.photo.name;
     const alt = this.state.photo.name;
@@ -90,12 +89,9 @@ class NewStudent extends Component {
     })
       .then(res => res.json())
       .then(response => {
-        // return response.text();
         this.props.handleSubmit(response);
         this.props.history.push("/");
       });
-
-    // this.props.handleSubmit(payload);
   };
 
   addPhoto(addPhoto) {
@@ -143,18 +139,17 @@ class NewStudent extends Component {
   render() {
     return (
       <div className="container">
-        {/* <form
-          onSubmit={this.handleSave}
-          method="post"
-          encType="multipart/form-data"
-        > */}
         <form method="post">
+          <NavLink to="/">
+            <button className="buttoncancel">Cancel</button>
+          </NavLink>
+          <br />
+          <br />
           <input
             id="photo"
             name="photo"
             type="file"
             multiple="multiple"
-            placeholder="Upload your photo"
             onChange={e => this.addPhoto(e)}
           />
 
@@ -240,13 +235,9 @@ class NewStudent extends Component {
             onChange={e => this.addJoinedOn(e.target.value)}
           />
 
-          <button type="submit" onClick={this.handleSave}>
+          <button className="button" type="submit" onClick={this.handleSave}>
             Save
           </button>
-
-          <NavLink to="/">
-            <button>Cancel</button>
-          </NavLink>
         </form>
       </div>
     );

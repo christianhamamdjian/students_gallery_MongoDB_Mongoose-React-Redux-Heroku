@@ -17,10 +17,10 @@ class EditStudent extends Component {
 
     const selectedStudent =
       props.students.find(student => student._id === props.myId) || {};
-    console.log(selectedStudent._id);
+    console.log(selectedStudent);
 
     this.state = {
-      photo: selectedStudent.photo || "",
+      photo: "",
       src: selectedStudent.src || "",
       alt: selectedStudent.alt || "",
       firstName: selectedStudent.firstName || "",
@@ -40,8 +40,8 @@ class EditStudent extends Component {
     e.preventDefault();
     const _id = this.props.myId;
     const newPhoto = this.state.photo;
-    const newSrc = this.state.src;
-    const newAlt = this.state.alt;
+    const newSrc = this.state.photo.name;
+    const newAlt = this.state.photo.name;
     const newFirstName = this.state.firstName;
     const newLastName = this.state.lastName;
     const newTitle = this.state.title;
@@ -85,18 +85,7 @@ class EditStudent extends Component {
     formData.append("motivatesMe", newMotivatesMe);
     formData.append("favoriteQuote", newFavoriteQuote);
     formData.append("joinedOn", newJoinedOn);
-
     console.log(formData);
-    fetch("/api/newstudent", {
-      method: "POST",
-      headers: {
-        Accept: "application/json"
-      },
-      body: formData
-    }).then(response => {
-      return response.text();
-    });
-
     fetch(`/api/update/${_id}`, {
       method: "PUT",
       headers: {
@@ -104,18 +93,16 @@ class EditStudent extends Component {
       },
       body: formData
     })
-      .then(res => {
-        console.log("this is the response", res);
-      })
-      .catch(err => {
-        console.log("my errors", err);
+      .then(res => res.json())
+      .then(response => {
+        console.log("response", response);
+        this.props.handleSubmit(response);
+        this.props.history.push("/");
       });
-
-    this.props.handleSubmit(payload);
-    this.props.history.push("/");
   };
   changePhoto(changePhoto) {
     this.setState({ photo: changePhoto.target.files[0] });
+    console.log(changePhoto.target.files[0]);
   }
   changeSrc(changeSrc) {
     this.setState({ src: changeSrc });
@@ -159,15 +146,18 @@ class EditStudent extends Component {
   render() {
     return (
       <div className="container">
-        <form onSubmit={this.handleUpdate}>
+        <form method="put">
+          <NavLink to="/">
+            <button className="buttoncancel">Cancel</button>
+          </NavLink>
+          <br />
+          <br />
           <input
             id="photo"
             name="photo"
             type="file"
             multiple="multiple"
-            placeholder="Upload your photo"
-            value={this.state.photo}
-            onChange={e => this.changePhoto(e.target.value)}
+            onChange={e => this.changePhoto(e)}
           />
 
           <label htmlFor="firstName">First name:</label>
@@ -262,11 +252,9 @@ class EditStudent extends Component {
             onChange={e => this.changeJoinedOn(e.target.value)}
           />
 
-          <button type="submit">Update</button>
-
-          <NavLink to="/">
-            <button>Cancel</button>
-          </NavLink>
+          <button className="button" type="submit" onClick={this.handleUpdate}>
+            Update
+          </button>
         </form>
       </div>
     );
