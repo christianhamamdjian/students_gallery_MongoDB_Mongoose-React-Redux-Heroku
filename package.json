@@ -9,18 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon --ignore client/ server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
-  },
-  "engines": {
-    "node": "10.6.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "Node Js project"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "nodemon": "^1.18.2"
   },
   "dependencies": {
