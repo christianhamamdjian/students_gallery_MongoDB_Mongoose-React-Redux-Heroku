@@ -1,13 +1,14 @@
 const express = require("express");
+const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const mongoose = require("mongoose");
-const cloudinary = require("cloudinary");
+const ejs = require("ejs");
 const path = require("path");
+const { MongoClient, ObjectID } = require("mongodb");
 const methodOverride = require("method-override");
 const app = express();
 const port = process.env.PORT || 8080;
-require("dotenv").config();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,9 +24,6 @@ const Student = mongoose.model("Student", {
     type: String
   },
   alt: {
-    type: String
-  },
-  photoId: {
     type: String
   },
   firstName: {
@@ -120,13 +118,11 @@ app.get("/students/:id", (req, res) => {
 });
 
 app.post("/api/newstudent", upload.single("photo"), (req, res) => {
-  cloudinary.config({
-    cloud_name: process.env.CLOUDNAME,
-    api_key: process.env.APIKEY,
-    api_secret: process.env.APISECRET
-  });
-  let fileName = req.body.alt;
-  const newStudentBase = {
+  console.log("Server photo:", req.file);
+  const newStudent = new Student({
+    photo: req.file,
+    src: "/" + req.file.filename,
+    alt: req.file.filename,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     title: req.body.title,
@@ -137,123 +133,56 @@ app.post("/api/newstudent", upload.single("photo"), (req, res) => {
     motivatesMe: req.body.motivatesMe,
     favoriteQuote: req.body.favoriteQuote,
     joinedOn: req.body.joinedOn
-  };
-  if (req.file) {
-    fileName = req.file.filename;
-    cloudinary.uploader.upload(req.file.path, function(result) {
-      let photoUrl = "/" + this.fileName;
-      if (result.url) {
-        photoUrl = result.url;
-      }
-      const newStudent = new Student({
-        ...newStudentBase,
-        photo: req.file,
-        src: photoUrl,
-        alt: fileName,
-        photoId: result.public_id
-      });
-      newStudent
-        .save()
-        .then(doc => {
-          console.log("Saved");
-          console.log(JSON.stringify(doc, undefined, 4));
-          res.json(doc);
-        })
-        .catch(e => {
-          console.log("Unable to save", e);
-        });
-    });
-  } else {
-    const newStudent = new Student({
-      ...newStudentBase,
-      photo: "",
-      src: "",
-      alt: "",
-      photoId: ""
-    });
-    newStudent
-      .save()
-      .then(doc => {
-        console.log("Saved");
-        console.log(JSON.stringify(doc, undefined, 4));
-        res.json(doc);
-      })
-      .catch(e => {
-        console.log("Unable to save", e);
-      });
-  }
+  });
+  console.log("My photo:", req.file);
+  newStudent.save().then(
+    doc => {
+      console.log("Saved");
+      console.log(JSON.stringify(doc, undefined, 4));
+      res.send(doc);
+    },
+    e => {
+      console.log("Unable to save", e);
+    }
+  );
+  res.json(newStudent);
 });
 
 app.put("/api/update/:id", upload.single("photo"), (req, res) => {
+  console.log(req.body.alt);
   const id = req.params.id;
-  cloudinary.config({
-    cloud_name: process.env.CLOUDNAME,
-    api_key: process.env.APIKEY,
-    api_secret: process.env.APISECRET
-  });
   let fileName = req.body.alt;
-  const newStudentBase = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    title: req.body.title,
-    nationality: req.body.nationality,
-    skills: [req.body.skills],
-    whySofterDeveloper: req.body.whySofterDeveloper,
-    longTermVision: req.body.longTermVision,
-    motivatesMe: req.body.motivatesMe,
-    favoriteQuote: req.body.favoriteQuote,
-    joinedOn: req.body.joinedOn
-  };
   if (req.file) {
     fileName = req.file.filename;
-    cloudinary.uploader.upload(req.file.path, function(result) {
-      let photoUrl = "/" + this.fileName;
-      if (result.url) {
-        photoUrl = result.url;
-      }
-      console.log("Photo src:", photoUrl);
-
-      Student.findByIdAndUpdate(
-        id,
-        {
-          ...newStudentBase,
-          photo: req.file,
-          src: photoUrl,
-          alt: fileName,
-          photoId: result.public_id
-        },
-        { new: true }
-      )
-        .then(doc => {
-          console.log("Saved");
-          console.log(JSON.stringify(doc, undefined, 4));
-          res.json(doc);
-        })
-        .catch(e => {
-          console.log("Unable to save", e);
-        });
-    });
-  } else {
-    Student.findByIdAndUpdate(
-      id,
-      {
-        ...newStudentBase,
-        photo: "",
-        src: req.body.src,
-        alt: req.body.alt,
-        photoId: req.body.public_id
-      },
-      { new: true }
-    )
-      .then(doc => {
-        console.log("Saved");
-        console.log(JSON.stringify(doc, undefined, 4));
-        res.json(doc);
-      })
-      .catch(e => {
-        console.log("Unable to save", e);
-      });
   }
+  Student.findByIdAndUpdate(
+    id,
+    {
+      photo: req.file,
+      src: "/" + fileName,
+      alt: fileName,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      title: req.body.title,
+      nationality: req.body.nationality,
+      skills: [req.body.skills],
+      whySofterDeveloper: req.body.whySofterDeveloper,
+      longTermVision: req.body.longTermVision,
+      motivatesMe: req.body.motivatesMe,
+      favoriteQuote: req.body.favoriteQuote,
+      joinedOn: req.body.joinedOn
+    },
+    { new: true }
+  ).then(
+    doc => {
+      console.log("Saved");
+      console.log(JSON.stringify(doc, undefined, 4));
+      res.json(doc);
+    },
+    e => {
+      console.log("Unable to save", e);
+    }
+  );
 });
 
 app.delete("/api/:id", (req, res) => {

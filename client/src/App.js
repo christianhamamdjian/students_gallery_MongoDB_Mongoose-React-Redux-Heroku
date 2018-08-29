@@ -1,14 +1,7 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  NavLink,
-  Redirect,
-  Prompt,
-  Switch
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
+import { connect } from "react-redux";
 
 import NewStudent from "./NewStudent";
 import SingleStudent from "./SingleStudent";
@@ -20,6 +13,11 @@ const NotFound = () => {
 };
 
 class App extends Component {
+  componentDidMount() {
+    fetch("/api/students")
+      .then(res => res.json())
+      .then(students => this.props.getStudents(students));
+  }
   render() {
     return (
       <div className="App">
@@ -68,4 +66,19 @@ class App extends Component {
     );
   }
 }
-export default App;
+const mapStateToProps = state => {
+  return { students: state };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    getStudents: students =>
+      dispatch({
+        type: "GET_STUDENTS",
+        students
+      })
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

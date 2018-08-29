@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  NavLink,
-  Redirect,
-  Prompt,
-  Switch
-} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./App.css";
 import { connect } from "react-redux";
 
@@ -17,7 +9,7 @@ class EditStudent extends Component {
 
     const selectedStudent =
       props.students.find(student => student._id === props.myId) || {};
-    console.log(selectedStudent);
+    console.log(selectedStudent.src);
 
     this.state = {
       photo: "",
@@ -40,8 +32,8 @@ class EditStudent extends Component {
     e.preventDefault();
     const _id = this.props.myId;
     const newPhoto = this.state.photo;
-    const newSrc = this.state.photo.name;
-    const newAlt = this.state.photo.name;
+    const newSrc = this.state.src;
+    const newAlt = this.state.alt;
     const newFirstName = this.state.firstName;
     const newLastName = this.state.lastName;
     const newTitle = this.state.title;

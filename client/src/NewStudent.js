@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  NavLink,
-  Redirect,
-  Prompt,
-  Switch
-} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./App.css";
 import { connect } from "react-redux";
 
@@ -48,22 +40,6 @@ class NewStudent extends Component {
     const favoriteQuote = this.state.favoriteQuote;
     const joinedOn = this.state.joinedOn;
 
-    const payload = {
-      photo,
-      src,
-      alt,
-      firstName,
-      lastName,
-      title,
-      nationality,
-      skills,
-      whySofterDeveloper,
-      longTermVision,
-      motivatesMe,
-      favoriteQuote,
-      joinedOn
-    };
-
     const formData = new FormData();
     formData.append("photo", photo);
     formData.append("src", src);
@@ -79,7 +55,6 @@ class NewStudent extends Component {
     formData.append("favoriteQuote", favoriteQuote);
     formData.append("joinedOn", joinedOn);
 
-    console.log(formData);
     fetch("/api/newstudent", {
       method: "POST",
       headers: {

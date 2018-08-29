@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  NavLink,
-  Redirect,
-  Prompt,
-  Switch
-} from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./App.css";
 import { connect } from "react-redux";
 
@@ -23,15 +15,15 @@ class SingleStudent extends Component {
       .catch(err => {
         console.log("my errors", err);
       });
-
     this.props.handleRemove(removedId);
     this.props.history.push("/");
   };
+
   render() {
     const selectedStudent = this.props.students.filter(
       student => student._id === this.props.myId
     )[0];
-
+    if (!selectedStudent) return "loading";
     return (
       <div>
         <br />
@@ -47,7 +39,7 @@ class SingleStudent extends Component {
 
         <ul>
           <li>
-            <img width="300" src={selectedStudent.src} />
+            <img width="300" alt="" src={selectedStudent.src} />
             <h1>
               <span>{selectedStudent.firstName} </span>
               <span>{selectedStudent.lastName}</span>
