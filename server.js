@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect(
-  "mongodb://chris:chris18@ds159121.mlab.com:59121/students_gallery",
+  process.env.MONGODB,
   { useNewUrlParser: true }
 );
 
@@ -120,6 +120,7 @@ app.get("/students/:id", (req, res) => {
 });
 
 app.post("/api/newstudent", upload.single("photo"), (req, res) => {
+  // Coudinary using dotenv
   cloudinary.config({
     cloud_name: process.env.CLOUDNAME,
     api_key: process.env.APIKEY,
