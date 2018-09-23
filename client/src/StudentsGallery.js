@@ -7,15 +7,17 @@ class StudentsGallery extends Component {
   render() {
     return (
       <div>
-        <NavLink exact activeStyle={{ color: "orange" }} to="/new-student">
-          <button className="button">Add Student</button>
+        <NavLink exact to="/new-student">
+          <button className="buttongallery">Add Student</button>
         </NavLink>
         <div>
           <ul>
             {this.props.students.map(student => (
               <Link key={student._id} to={"/students/" + student._id}>
                 <li>
-                  <img width="200" alt="" src={student.src} />
+                  <div className="image-container">
+                    <img width="200" alt="" src={student.src} />
+                  </div>
                   <h1>
                     <span>{student.firstName} </span>
                     <span>{student.lastName}</span>

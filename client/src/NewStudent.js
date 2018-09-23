@@ -115,11 +115,6 @@ class NewStudent extends Component {
     return (
       <div className="container">
         <form method="post">
-          <NavLink to="/">
-            <button className="buttoncancel">Cancel</button>
-          </NavLink>
-          <br />
-          <br />
           <input
             id="photo"
             name="photo"
@@ -209,10 +204,16 @@ class NewStudent extends Component {
             placeholder="Joined on"
             onChange={e => this.addJoinedOn(e.target.value)}
           />
-
-          <button className="button" type="submit" onClick={this.handleSave}>
+          <button
+            className="buttonsave"
+            type="submit"
+            onClick={this.handleSave}
+          >
             Save
           </button>
+          <NavLink to="/">
+            <button className="buttoncancel">Cancel</button>
+          </NavLink>
         </form>
       </div>
     );
