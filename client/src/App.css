@@ -204,7 +204,7 @@ input {
 @media screen and (max-width: 550px) {
   .student-nav {
     width: 80%;
-    display: grblockid;
+    display: block;
     margin: 20px auto;
   }
   ul {
