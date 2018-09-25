@@ -204,7 +204,11 @@ input {
 @media screen and (max-width: 550px) {
   .student-nav {
     width: 80%;
+<<<<<<< HEAD
     display: grid;
+=======
+    display: block;
+>>>>>>> fabc2ca9b37654cd69451f20046bdf02d427704f
     margin: 20px auto;
   }
   ul {

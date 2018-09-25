@@ -9,7 +9,6 @@ class EditStudent extends Component {
 
     const selectedStudent =
       props.students.find(student => student._id === props.myId) || {};
-    console.log(selectedStudent.src);
 
     this.state = {
       photo: "",
