@@ -139,6 +139,11 @@ class EditStudent extends Component {
     return (
       <div className="container">
         <form method="put">
+          <NavLink to="/">
+            <button className="buttoncancel">Cancel</button>
+          </NavLink>
+          <br />
+          <br />
           <input
             id="photo"
             name="photo"
@@ -239,16 +244,9 @@ class EditStudent extends Component {
             onChange={e => this.changeJoinedOn(e.target.value)}
           />
 
-          <button
-            className="buttonupdate"
-            type="submit"
-            onClick={this.handleUpdate}
-          >
+          <button className="button" type="submit" onClick={this.handleUpdate}>
             Update
           </button>
-          <NavLink to={"/students/" + this.props.myId}>
-            <button className="buttoncancel">Cancel</button>
-          </NavLink>
         </form>
       </div>
     );

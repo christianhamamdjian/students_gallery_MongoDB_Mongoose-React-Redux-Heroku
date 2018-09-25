@@ -21,7 +21,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Integrify Students Gallery</h1>  
         <Router>
           <div id="my-blog">
             <Switch>
