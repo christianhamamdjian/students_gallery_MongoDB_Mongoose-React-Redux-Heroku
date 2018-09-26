@@ -7,6 +7,7 @@ const path = require("path");
 const methodOverride = require("method-override");
 const app = express();
 const port = process.env.PORT || 8080;
+
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
 app.use(bodyParser.json());
@@ -59,7 +60,8 @@ const Student = mongoose.model("Student", {
     type: String
   }
 });
-
+app.use(express.static(__dirname + "/client/build"));
+app.use(express.static(__dirname + "/client/build/css"));
 app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + "/public/css"));
 app.use(express.static(__dirname + "/public/images/"));
