@@ -44,24 +44,6 @@ class EditStudent extends Component {
     const newFavoriteQuote = this.state.favoriteQuote;
     const newJoinedOn = this.state.joinedOn;
 
-    const payload = {
-      _id,
-      newPhoto,
-      newSrc,
-      newAlt,
-      newFirstName,
-      newLastName,
-      newTitle,
-      newNationality,
-      newSkills,
-      newWhySofterDeveloper,
-      newMotivatesMe,
-      newLongTermVision,
-      newFavoriteQuote,
-      newJoinedOn
-    };
-    console.log("payload :", payload);
-
     const formData = new FormData();
     formData.append("photo", newPhoto);
     formData.append("src", newSrc);
@@ -76,7 +58,7 @@ class EditStudent extends Component {
     formData.append("motivatesMe", newMotivatesMe);
     formData.append("favoriteQuote", newFavoriteQuote);
     formData.append("joinedOn", newJoinedOn);
-    console.log(formData);
+
     fetch(`/api/update/${_id}`, {
       method: "PUT",
       headers: {
@@ -86,14 +68,12 @@ class EditStudent extends Component {
     })
       .then(res => res.json())
       .then(response => {
-        console.log("response", response);
         this.props.handleSubmit(response);
         this.props.history.push("/");
       });
   };
   changePhoto(changePhoto) {
     this.setState({ photo: changePhoto.target.files[0] });
-    console.log(changePhoto.target.files[0]);
   }
   changeSrc(changeSrc) {
     this.setState({ src: changeSrc });
@@ -137,6 +117,10 @@ class EditStudent extends Component {
   render() {
     return (
       <div className="container">
+        <NavLink to="/">
+          <i className="fas fa-2x fa-angle-double-left" />
+        </NavLink>
+
         <form method="put">
           <input
             id="photo"
@@ -165,6 +149,7 @@ class EditStudent extends Component {
             value={this.state.lastName}
             onChange={e => this.changeLastName(e.target.value)}
           />
+
           <label htmlFor="title">Title:</label>
           <input
             id="title"
@@ -174,6 +159,7 @@ class EditStudent extends Component {
             value={this.state.title}
             onChange={e => this.changeTitle(e.target.value)}
           />
+
           <label htmlFor="nationality">Nationality:</label>
           <input
             id="nationality"
@@ -183,6 +169,7 @@ class EditStudent extends Component {
             value={this.state.nationality}
             onChange={e => this.changeNationality(e.target.value)}
           />
+
           <label htmlFor="skills">Skills:</label>
           <input
             id="skills"
@@ -192,6 +179,7 @@ class EditStudent extends Component {
             value={this.state.skills}
             onChange={e => this.changeSkills(e.target.value)}
           />
+
           <label htmlFor="whySofterDeveloper">Why a software developer:</label>
           <input
             id="whySofterDeveloper"
@@ -201,6 +189,7 @@ class EditStudent extends Component {
             value={this.state.whySofterDeveloper}
             onChange={e => this.changeWhySofterDeveloper(e.target.value)}
           />
+
           <label htmlFor="longTermVision">Long term vision:</label>
           <input
             id="longTermVision"
@@ -210,6 +199,7 @@ class EditStudent extends Component {
             value={this.state.longTermVision}
             onChange={e => this.changeLongTermVision(e.target.value)}
           />
+
           <label htmlFor="motivatesMe">What motivates me:</label>
           <input
             id="motivatesMe"
@@ -219,6 +209,7 @@ class EditStudent extends Component {
             value={this.state.motivatesMe}
             onChange={e => this.changeMotivatesMe(e.target.value)}
           />
+
           <label htmlFor="favoriteQuote">Favorite quote:</label>
           <input
             id="favoriteQuote"
@@ -228,6 +219,7 @@ class EditStudent extends Component {
             value={this.state.favoriteQuote}
             onChange={e => this.changeFavoriteQuote(e.target.value)}
           />
+
           <label htmlFor="joinedOn">Joined on:</label>
           <input
             id="joinedOn"
@@ -239,14 +231,17 @@ class EditStudent extends Component {
           />
 
           <button
-            className="buttonupdate"
+            className="button-update"
             type="submit"
             onClick={this.handleUpdate}
           >
-            Update
+            <i className="fa fa-3x fa-check-circle" />
           </button>
-          <NavLink to={"/students/" + this.props.myId}>
-            <button className="buttoncancel">Cancel</button>
+          <NavLink
+            className="button-cancel"
+            to={"/students/" + this.props.myId}
+          >
+            <i className="fa fa-2x fa-window-close" />
           </NavLink>
         </form>
       </div>

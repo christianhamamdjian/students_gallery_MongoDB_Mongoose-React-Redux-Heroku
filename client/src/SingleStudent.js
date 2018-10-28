@@ -27,53 +27,59 @@ class SingleStudent extends Component {
     return (
       <div>
         <div className="student-nav">
-          <NavLink to="/">
-            <button className="button">Gallery</button>
-          </NavLink>
           <Link key={this.props.myId} to={"/students/edit/" + this.props.myId}>
-            <button className="button">Edit Student</button>
+            <i className="fa fa-2x fa-edit" />
           </Link>
-          <button className="button" onClick={this.handleDelete}>
-            Delete
-          </button>
+          <NavLink to="/">
+            <i className="fas fa-2x fa-angle-double-left" />
+          </NavLink>
+          <i
+            onClick={() => {
+              if (window.confirm("Are you sure you wish to delete this item?"))
+                this.handleDelete();
+            }}
+            className="fa fa-2x fa-trash"
+          />
         </div>
         <div className="student-info">
           <div className="student-info-img">
             <img width="300" alt="" src={selectedStudent.src} />
           </div>
-          <h1>
-            <span>{selectedStudent.firstName} </span>
-            <span>{selectedStudent.lastName}</span>
-          </h1>
-          <h2>{selectedStudent.title}</h2>
-          <p>
-            <strong>Nationality: </strong>
-            {selectedStudent.nationality}
-          </p>
-          <p>
-            <strong>Skills: </strong>
-            {selectedStudent.skills}
-          </p>
-          <p>
-            <strong>Why a software developer: </strong>
-            {selectedStudent.whySofterDeveloper}
-          </p>
-          <p>
-            <strong>Long term vision: </strong>
-            {selectedStudent.longTermVision}
-          </p>
-          <p>
-            <strong>What motivates me: </strong>
-            {selectedStudent.motivatesMe}
-          </p>
-          <p>
-            <strong>Favorite quote: </strong>
-            {selectedStudent.favoriteQuote}
-          </p>
-          <p>
-            <strong>Joined on: </strong>
-            {selectedStudent.joinedOn}
-          </p>
+          <div className="student-info-text">
+            <h1>
+              <span>{selectedStudent.firstName}</span>
+              <span>{selectedStudent.lastName}</span>
+            </h1>
+            <h2>{selectedStudent.title}</h2>
+            <p>
+              <strong>Nationality: </strong>
+              {selectedStudent.nationality}
+            </p>
+            <p>
+              <strong>Skills: </strong>
+              {selectedStudent.skills}
+            </p>
+            <p>
+              <strong>Why a software developer: </strong>
+              {selectedStudent.whySofterDeveloper}
+            </p>
+            <p>
+              <strong>Long term vision: </strong>
+              {selectedStudent.longTermVision}
+            </p>
+            <p>
+              <strong>What motivates me: </strong>
+              {selectedStudent.motivatesMe}
+            </p>
+            <p>
+              <strong>Favorite quote: </strong>
+              {selectedStudent.favoriteQuote}
+            </p>
+            <p>
+              <strong>Joined on: </strong>
+              {selectedStudent.joinedOn}
+            </p>
+          </div>
         </div>
       </div>
     );

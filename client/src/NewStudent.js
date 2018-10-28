@@ -71,7 +71,6 @@ class NewStudent extends Component {
 
   addPhoto(addPhoto) {
     this.setState({ photo: addPhoto.target.files[0] });
-    console.log(addPhoto.target.files[0]);
   }
   addSrc(addSrc) {
     this.setState({ src: addSrc });
@@ -85,9 +84,9 @@ class NewStudent extends Component {
   addLastName(addLastName) {
     this.setState({ lastName: addLastName });
   }
-  addTitle(adddTitle) {
+  addTitle(addTitle) {
     this.setState({
-      title: adddTitle
+      title: addTitle
     });
   }
   addNationality(addNationality) {
@@ -114,8 +113,13 @@ class NewStudent extends Component {
   render() {
     return (
       <div className="container">
+        <NavLink to="/">
+          <i className="fas fa-2x fa-angle-double-left" />
+        </NavLink>
         <form method="post">
+          <label htmlFor="firstName">Upload photo:</label>
           <input
+            className="photo"
             id="photo"
             name="photo"
             type="file"
@@ -140,6 +144,7 @@ class NewStudent extends Component {
             placeholder="Last name"
             onChange={e => this.addLastName(e.target.value)}
           />
+
           <label htmlFor="title">Title:</label>
           <input
             id="title"
@@ -148,6 +153,7 @@ class NewStudent extends Component {
             placeholder="Title"
             onChange={e => this.addTitle(e.target.value)}
           />
+
           <label htmlFor="nationality">Nationality:</label>
           <input
             id="nationality"
@@ -156,6 +162,7 @@ class NewStudent extends Component {
             placeholder="Nationality"
             onChange={e => this.addNationality(e.target.value)}
           />
+
           <label htmlFor="skills">Skills:</label>
           <input
             id="skills"
@@ -164,6 +171,7 @@ class NewStudent extends Component {
             placeholder="Skills"
             onChange={e => this.addSkills(e.target.value)}
           />
+
           <label htmlFor="whySofterDeveloper">Why a software developer:</label>
           <input
             id="whySofterDeveloper"
@@ -172,6 +180,7 @@ class NewStudent extends Component {
             placeholder="Why a software developer"
             onChange={e => this.addWhySofterDeveloper(e.target.value)}
           />
+
           <label htmlFor="longTermVision">Long term vision:</label>
           <input
             id="longTermVision"
@@ -180,6 +189,7 @@ class NewStudent extends Component {
             placeholder="Long term vision"
             onChange={e => this.addLongTermVision(e.target.value)}
           />
+
           <label htmlFor="motivatesMe">What motivates me:</label>
           <input
             id="motivatesMe"
@@ -188,6 +198,7 @@ class NewStudent extends Component {
             placeholder="What motivates me"
             onChange={e => this.addMotivatesMe(e.target.value)}
           />
+
           <label htmlFor="favoriteQuote">Favorite quote:</label>
           <input
             id="favoriteQuote"
@@ -196,6 +207,7 @@ class NewStudent extends Component {
             placeholder="Favorite quote"
             onChange={e => this.addFavoriteQuote(e.target.value)}
           />
+
           <label htmlFor="joinedOn">Joined on:</label>
           <input
             id="joinedOn"
@@ -204,15 +216,16 @@ class NewStudent extends Component {
             placeholder="Joined on"
             onChange={e => this.addJoinedOn(e.target.value)}
           />
+
           <button
-            className="buttonsave"
+            className="button-save"
             type="submit"
             onClick={this.handleSave}
           >
-            Save
+            <i className="fa fa-3x fa-check-circle" />
           </button>
-          <NavLink to="/">
-            <button className="buttoncancel">Cancel</button>
+          <NavLink className="button-cancel" to="/">
+            <i className="fa fa-2x fa-window-close" />
           </NavLink>
         </form>
       </div>
@@ -228,9 +241,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleSubmit: payload =>
-      console.log("payload", payload) ||
-      dispatch({ type: "ADD_STUDENT", payload })
+    handleSubmit: payload => dispatch({ type: "ADD_STUDENT", payload })
   };
 };
 

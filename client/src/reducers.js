@@ -12,7 +12,6 @@ export const reducer = (state = [], action) => {
     case "UPDATE_STUDENT":
       return state.map(student => {
         if (student._id === action.payload._id) {
-          console.log("Updated Student:", action.payload);
           return {
             ...student,
             ...action.payload,

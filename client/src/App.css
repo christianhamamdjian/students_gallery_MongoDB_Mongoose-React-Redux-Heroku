@@ -1,46 +1,60 @@
+html {
+  padding-bottom: 20px;
+}
 .App {
   text-align: center;
 }
 body {
   font-family: sans-serif, Arial;
-  max-width: 960px;
   margin: 0 auto;
-  color: #f8f8f8;
-  background-color: #173869;
-  padding-top: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 30px;
+  color: #000;
+  background-color: #fff;
 }
 h1 {
-  font-size: 1.5em;
+  font-size: 2.2em;
 }
 h2 {
-  font-size: 0.9em;
+  font-size: 1.3em;
 }
 h3 {
-  font-size: 1.2em;
-  margin-top: 60px;
+  font-size: 0.9em;
+  margin-top: 20px;
 }
 h4 {
   font-size: 0.9em;
 }
 p {
   font-size: 0.8em;
-  color: #dfdfdf;
+  color: #000;
 }
 a {
   text-decoration: none;
-  color: #d5d6d8;
+  color: #000;
 }
 a:hover {
   color: #ffcba3;
 }
-.clearfix {
-  clear: both;
+.loader {
+  position: absolute;
+  top: 100px;
+  left: 500px;
+  z-index: -100;
+}
+.fas,
+.fa {
+  color: #c4c4c4;
+  cursor: pointer;
+  font-size: 30px;
+}
+.fas:hover,
+.fa:hover {
+  color: #ffcba3;
+}
+button {
+  background-color: transparent;
 }
 hr {
-  border-bottom: 3px solid #1eb4ef;
+  border-bottom: 1px solid #000;
 }
 .form {
   max-width: 800px;
@@ -48,127 +62,167 @@ hr {
 .header {
   text-align: center;
 }
-button {
-  background-color: transparent;
-  border: 1px solid #1580aa;
-  color: #fff;
-  padding: 10px 10px;
-  font-size: 0.9em;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 10px;
-}
-button:hover {
-  background-color: #1580aa;
-  border: 1px solid transparent;
-}
+
 label {
   font-size: 0.9em;
-  color: #dfdfdf;
+  color: #000;
   float: left;
-  margin: 20px 0px;
+  margin: 40px 0px 10px;
   width: 100%;
+  font-weight: bold;
 }
 ::placeholder {
   font-size: 1em;
-  color: #b1b5bb;
+  color: #c3c3c3;
 }
 input[type="text"] {
   font-size: 0.9em;
-  background-color: #454d57;
   border-top: 1px solid transparent;
   border-right: 1px solid transparent;
   border-left: 1px solid transparent;
   border-bottom: 1px solid #90979e;
   margin-top: 40px;
-  color: #dfdfdf;
+  color: #000;
   outline: none;
-  min-width: 380px;
+  min-width: 100%;
 }
-.invalid {
-  border: 2px solid red !important;
+
+.photo::-webkit-file-upload-button {
+  cursor: pointer;
 }
+
+input[type="file" i] {
+  color: #f2842d !important;
+  outline: none;
+  float: left;
+}
+
 .message {
   color: #f2842d;
   max-width: 180px;
 }
 .container {
   margin: 30px auto;
-  width: 60%;
+  width: 80%;
 }
-.student-card {
-  width: 300px;
-  text-align: left;
+
+ul {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 0px;
 }
 li {
   list-style: none;
-  background: #1580aa;
-  color: #fff;
-  padding: 30px;
-  text-align: left;
-  min-height: 356px;
+  background: #fff;
+  color: #000;
+  text-align: center;
 }
-ul {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 20px;
-}
+
 input[type="file" i] {
   color: #fff;
 }
-.buttongallery {
-  color: #fff;
+.button-thumbnail {
+  color: #000;
   cursor: pointer;
   margin: 20px auto;
+  padding: 10px 10px;
+  height: 30px;
+  width: 30px;
+  float: right;
+  border-radius: 50%;
+  border: 2px solid #000;
+  text-align: center;
+  font-size: 1.4em;
+  outline: none;
+  line-height: 0px;
 }
-.buttoncancel {
-  color: #fff;
+.button-gallery {
+  color: #000;
+  cursor: pointer;
+  margin: 20px auto;
+  padding: 20px 20px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  text-align: center;
+  font-size: 3em;
+  outline: none;
+  line-height: 0;
+}
+.button-cancel {
+  color: #000;
+  cursor: pointer;
+  float: right;
+  outline: none;
+  margin-right: 30px;
+  margin-top: 22px;
+}
+.button-save {
+  border: 0px solid transparent;
+  color: #000;
+  cursor: pointer;
+  float: right;
+  outline: none;
+  margin-top: 20px;
+}
+.button-update {
+  border: 0px solid transparent;
+  color: #000;
+  cursor: pointer;
+  float: right;
+  outline: none;
+  margin-top: 20px;
+}
+.button-update:hover {
+  border: 0px solid transparent;
+}
+
+.button-delete {
+  color: #000;
   cursor: pointer;
   float: left;
-  margin-left: 40px;
+  outline: none;
+  margin-top: 20px;
 }
-.buttonsave {
-  color: #fff;
-  cursor: pointer;
-  float: left;
-}
-.buttonupdate {
-  color: #fff;
-  cursor: pointer;
-  float: left;
-}
-.buttondelete {
-  color: #fff;
-  cursor: pointer;
-  float: left;
-}
+
 label {
   display: block;
   text-align: left;
 }
-input {
-  display: block;
+
+img {
+  max-width: 100%;
 }
 .image-container {
-  height: 240px;
   display: block;
-  overflow: hidden;
   text-align: center;
+}
+.info-container {
+  height: auto;
+  display: block;
+  padding: 10px 20px 20px;
+  text-align: center;
+}
+.info-container-text {
+  min-height: 80px;
 }
 .student-info {
-  width: 42%;
-  background: #1580aa;
-  color: #fff;
-  padding: 40px;
-  text-align: left;
-  min-height: 400px;
+  width: 60%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  background: #fff;
+  color: #000;
   margin: 0 auto;
+  text-align: left;
 }
-.student-info-img {
-  text-align: center;
+.student-info img {
+  margin-top: 20px;
+  float: right;
 }
 .student-nav {
-  width: 50%;
+  width: 30%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 12px;
@@ -177,26 +231,48 @@ input {
 .student-nav button {
   width: 100%;
 }
-@media screen and (min-width: 551px) and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .student-nav {
-    width: 80%;
+    width: 60%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 12px;
     margin: 20px auto;
   }
   ul {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0px;
   }
   .student-info {
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
     width: 80%;
-    background: #1580aa;
-    color: #fff;
-    padding: 40px;
-    text-align: left;
-    min-height: 400px;
+    background: #fff;
+    color: #000;
+    margin: 0 auto;
+  }
+}
+@media screen and (max-width: 768px) {
+  .student-nav {
+    width: 70%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 12px;
+    margin: 20px auto;
+  }
+  ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .student-info img {
+    float: none;
+  }
+  .student-info {
+    display: block;
+    width: 50%;
+    background: #fff;
+    color: #000;
     margin: 0 auto;
   }
 }
@@ -204,22 +280,46 @@ input {
 @media screen and (max-width: 550px) {
   .student-nav {
     width: 80%;
-    display: block;
-    margin: 20px auto;
+  }
+  .student-info img {
+    float: none;
+    margin-right: 0px;
   }
   ul {
     display: block;
+    padding: 0px;
   }
   li {
-    margin: 20px auto;
+    margin: 60px auto;
   }
   .student-info {
     width: 80%;
-    background: #1580aa;
-    color: #fff;
-    padding: 40px;
-    text-align: left;
-    min-height: 400px;
     margin: 0 auto;
+  }
+  .student-info img {
+    transform: translateX(-50%);
+    margin-left: 50%;
+  }
+  .student-card {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 12px;
+    margin: 0px;
+    border-bottom: 1px solid rgb(176, 176, 176);
+  }
+  .info-container-text {
+    min-height: 60px;
+    text-align: left;
+  }
+  .info-container .fas,
+  .info-container .fa {
+    float: right;
+    font-size: 40px;
+  }
+  .student-card img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-top: 20px;
   }
 }

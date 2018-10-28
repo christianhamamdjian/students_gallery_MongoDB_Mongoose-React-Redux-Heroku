@@ -14,14 +14,24 @@ const NotFound = () => {
 
 class App extends Component {
   componentDidMount() {
-    fetch("/api/students")
-      .then(res => res.json())
-      .then(students => this.props.getStudents(students));
+    const request = async () => {
+      try {
+        const res = await fetch("/api/students");
+        const json = await res
+          .json()
+          .then(students => this.props.getStudents(students));
+        return json;
+      } catch (err) {
+        alert(err);
+      }
+    };
+    request();
   }
+
   render() {
     return (
       <div className="App">
-        <h1>Integrify Students Gallery</h1>  
+        <h1>Integrify Students Gallery</h1>
         <Router>
           <div id="my-blog">
             <Switch>

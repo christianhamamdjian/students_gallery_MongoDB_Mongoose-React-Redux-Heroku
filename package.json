@@ -1,7 +1,7 @@
 {
   "name": "nodejs_application",
   "version": "1.0.0",
-  "description": "Using Express, Ejs to build a student info gallery",
+  "description": "Using Express, React and Redux to build a student info gallery",
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
@@ -12,13 +12,13 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "homepage": "https://pacific-tor-15082.herokuapp.com",
-    "nodemon": "^1.18.2"
+    "nodemon": "^1.18.4"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cloudinary": "^1.11.0",
-    "concurrently": "^3.6.1",
+    "concurrently": "^4.0.1",
     "express": "^4.16.3",
     "express-formidable": "^1.0.0",
     "ip": "^1.1.5",
