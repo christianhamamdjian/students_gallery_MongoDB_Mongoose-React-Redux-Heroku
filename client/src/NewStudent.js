@@ -55,18 +55,25 @@ class NewStudent extends Component {
     formData.append("favoriteQuote", favoriteQuote);
     formData.append("joinedOn", joinedOn);
 
-    fetch("/api/newstudent", {
-      method: "POST",
-      headers: {
-        Accept: "application/json"
-      },
-      body: formData
-    })
-      .then(res => res.json())
-      .then(response => {
-        this.props.handleSubmit(response);
-        this.props.history.push("/");
-      });
+    const request = async () => {
+      try {
+        const res = await fetch("/api/newstudent", {
+          method: "POST",
+          headers: {
+            Accept: "application/json"
+          },
+          body: formData
+        });
+        const json = await res.json().then(response => {
+          this.props.handleSubmit(response);
+          this.props.history.push("/");
+        });
+        return json;
+      } catch (err) {
+        alert(err);
+      }
+    };
+    request();
   };
 
   addPhoto(addPhoto) {

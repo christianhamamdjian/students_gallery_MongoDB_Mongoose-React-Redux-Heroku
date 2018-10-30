@@ -59,18 +59,25 @@ class EditStudent extends Component {
     formData.append("favoriteQuote", newFavoriteQuote);
     formData.append("joinedOn", newJoinedOn);
 
-    fetch(`/api/update/${_id}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json"
-      },
-      body: formData
-    })
-      .then(res => res.json())
-      .then(response => {
-        this.props.handleSubmit(response);
-        this.props.history.push("/");
-      });
+    const request = async () => {
+      try {
+        const res = await fetch(`/api/update/${_id}`, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json"
+          },
+          body: formData
+        });
+        const json = await res.json().then(response => {
+          this.props.handleSubmit(response);
+          this.props.history.push("/");
+        });
+        return json;
+      } catch (err) {
+        alert(err);
+      }
+    };
+    request();
   };
   changePhoto(changePhoto) {
     this.setState({ photo: changePhoto.target.files[0] });

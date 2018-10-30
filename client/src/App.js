@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import integrifyLogo from "./integrify_logo.png";
 import "./App.css";
 import { connect } from "react-redux";
 
@@ -31,7 +32,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Integrify Students Gallery</h1>
+        <div className="header">
+          <img alt="" src={integrifyLogo} />
+          <h1>Students Gallery</h1>
+        </div>
         <Router>
           <div id="my-blog">
             <Switch>
@@ -39,9 +43,7 @@ class App extends Component {
                 exact
                 strict
                 path="/"
-                render={props => (
-                  <StudentsGallery onSubmit="handleSave" {...props} />
-                )}
+                render={props => <StudentsGallery {...props} />}
               />
               <Route
                 exact
@@ -55,7 +57,6 @@ class App extends Component {
                 path="/students/:studentId"
                 render={props => (
                   <SingleStudent
-                    onSubmit="handleSave"
                     {...props}
                     myId={props.match.params.studentId}
                   />

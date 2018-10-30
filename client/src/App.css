@@ -4,6 +4,18 @@ html {
 .App {
   text-align: center;
 }
+.header {
+  color: #fff;
+  background-color: #000;
+  padding: 20px;
+  margin-bottom: 20px;
+  min-height: 100px;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+.header img {
+  height: 100px;
+}
 body {
   font-family: sans-serif, Arial;
   margin: 0 auto;
@@ -12,6 +24,8 @@ body {
 }
 h1 {
   font-size: 2.2em;
+  font-weight: 100;
+  line-height: 1.6;
 }
 h2 {
   font-size: 1.3em;
@@ -67,7 +81,7 @@ label {
   font-size: 0.9em;
   color: #000;
   float: left;
-  margin: 40px 0px 10px;
+  margin: 30px 0px 5px;
   width: 100%;
   font-weight: bold;
 }
@@ -81,7 +95,7 @@ input[type="text"] {
   border-right: 1px solid transparent;
   border-left: 1px solid transparent;
   border-bottom: 1px solid #90979e;
-  margin-top: 40px;
+  margin-top: 10px;
   color: #000;
   outline: none;
   min-width: 100%;
@@ -103,7 +117,7 @@ input[type="file" i] {
 }
 .container {
   margin: 30px auto;
-  width: 80%;
+  width: 60%;
 }
 
 ul {
@@ -207,6 +221,9 @@ img {
 .info-container-text {
   min-height: 80px;
 }
+.student-info-text h1 {
+  margin: 10px 0;
+}
 .student-info {
   width: 60%;
   display: grid;
@@ -232,6 +249,11 @@ img {
   width: 100%;
 }
 @media screen and (max-width: 1024px) {
+  .header {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+
   .student-nav {
     width: 60%;
     display: grid;
@@ -254,6 +276,18 @@ img {
   }
 }
 @media screen and (max-width: 768px) {
+  h1 {
+    font-size: 1.2em;
+    font-weight: 100;
+    line-height: 1.6;
+  }
+  .container {
+    width: 80%;
+  }
+  .header {
+    height: auto;
+    display: block;
+  }
   .student-nav {
     width: 70%;
     display: grid;
@@ -278,6 +312,9 @@ img {
 }
 
 @media screen and (max-width: 550px) {
+  .header img {
+    height: 80px;
+  }
   .student-nav {
     width: 80%;
   }

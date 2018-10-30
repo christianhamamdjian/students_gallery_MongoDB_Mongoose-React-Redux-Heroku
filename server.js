@@ -119,7 +119,7 @@ app.get("/students/:id", (req, res) => {
       res.status(400).send(e);
     }
   );
-}); 
+});
 
 app.post("/api/newstudent", upload.single("photo"), (req, res) => {
   // Coudinary using dotenv

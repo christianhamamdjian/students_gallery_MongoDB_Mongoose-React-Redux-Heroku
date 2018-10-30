@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link, NavLink } from "react-router-dom";
+import loader from "./loader.gif";
 import "./App.css";
 import { connect } from "react-redux";
 
@@ -13,7 +14,7 @@ class SingleStudent extends Component {
         console.log("this is res", res);
       })
       .catch(err => {
-        console.log("my errors", err);
+        alert(err);
       });
     this.props.handleRemove(removedId);
     this.props.history.push("/");
@@ -23,7 +24,7 @@ class SingleStudent extends Component {
     const selectedStudent = this.props.students.filter(
       student => student._id === this.props.myId
     )[0];
-    if (!selectedStudent) return "loading";
+    if (!selectedStudent) return <img src={loader} alt="loader" />;
     return (
       <div>
         <div className="student-nav">
@@ -47,7 +48,7 @@ class SingleStudent extends Component {
           </div>
           <div className="student-info-text">
             <h1>
-              <span>{selectedStudent.firstName}</span>
+              <span>{selectedStudent.firstName} </span>
               <span>{selectedStudent.lastName}</span>
             </h1>
             <h2>{selectedStudent.title}</h2>
