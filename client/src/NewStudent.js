@@ -2,44 +2,59 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import "./App.css";
 import { connect } from "react-redux";
-import { Field, reduxForm } from "redux-form";
-
-const validate = values => {
-  const errors = {};
-  if (!values.firstName) {
-    errors.firstName = "Required";
-  } else if (values.firstName.length < 4) {
-    errors.firstName = "Must be 4 characters or more";
-  }
-  if (!values.lastName) {
-    errors.lastName = "Required";
-  } else if (values.lastName.length < 4) {
-    errors.lastName = "Must be 4 characters or more";
-  }
-  return errors;
-};
-
-const renderField = ({
-  input,
-  label,
-  type,
-  meta: { touched, error, warning }
-}) => (
-  <div>
-    <label>{label}</label>
-    <div>
-      <input {...input} placeholder={label} type={type} />
-      {touched &&
-        ((error && <span className="message">{error}</span>) ||
-          (warning && <span>{warning}</span>))}
-    </div>
-  </div>
-);
 
 class NewStudent extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      photo: "",
+      src: "",
+      alt: "",
+      firstName: "",
+      lastName: "",
+      title: "",
+      nationality: "",
+      skills: "",
+      whySofterDeveloper: "",
+      motivatesMe: "",
+      longTermVision: "",
+      favoriteQuote: "",
+      joinedOn: ""
+    };
+  }
+
   handleSave = e => {
     e.preventDefault();
-    let payload = this.props.students.form.newStudent.values;
+    const photo = this.state.photo;
+    const src = this.state.photo.name;
+    const alt = this.state.photo.name;
+    const firstName = this.state.firstName;
+    const lastName = this.state.lastName;
+    const title = this.state.title;
+    const nationality = this.state.nationality;
+    const skills = this.state.skills;
+    const whySofterDeveloper = this.state.whySofterDeveloper;
+    const longTermVision = this.state.longTermVision;
+    const motivatesMe = this.state.motivatesMe;
+    const favoriteQuote = this.state.favoriteQuote;
+    const joinedOn = this.state.joinedOn;
+
+    const formData = new FormData();
+    formData.append("photo", photo);
+    formData.append("src", src);
+    formData.append("alt", alt);
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("title", title);
+    formData.append("nationality", nationality);
+    formData.append("skills", skills);
+    formData.append("whySofterDeveloper", whySofterDeveloper);
+    formData.append("longTermVision", longTermVision);
+    formData.append("motivatesMe", motivatesMe);
+    formData.append("favoriteQuote", favoriteQuote);
+    formData.append("joinedOn", joinedOn);
+
     const request = async () => {
       try {
         const res = await fetch("/api/newstudent", {
@@ -47,10 +62,10 @@ class NewStudent extends Component {
           headers: {
             Accept: "application/json"
           },
-          body: payload
+          body: formData
         });
         const json = await res.json().then(response => {
-          this.props.onSubmit(response);
+          this.props.handleSubmit(response);
           this.props.history.push("/");
         });
         return json;
@@ -61,119 +76,159 @@ class NewStudent extends Component {
     request();
   };
 
+  addPhoto(addPhoto) {
+    this.setState({ photo: addPhoto.target.files[0] });
+  }
+  addSrc(addSrc) {
+    this.setState({ src: addSrc });
+  }
+  addAlt(addAlt) {
+    this.setState({ alt: addAlt });
+  }
+  addFirstName(addFirstName) {
+    this.setState({ firstName: addFirstName });
+  }
+  addLastName(addLastName) {
+    this.setState({ lastName: addLastName });
+  }
+  addTitle(addTitle) {
+    this.setState({
+      title: addTitle
+    });
+  }
+  addNationality(addNationality) {
+    this.setState({ nationality: addNationality });
+  }
+  addSkills(addSkills) {
+    this.setState({ skills: addSkills });
+  }
+  addWhySofterDeveloper(addWhySofterDeveloper) {
+    this.setState({ whySofterDeveloper: addWhySofterDeveloper });
+  }
+  addMotivatesMe(addMotivatesMe) {
+    this.setState({ motivatesMe: addMotivatesMe });
+  }
+  addLongTermVision(addLongTermVision) {
+    this.setState({ longTermVision: addLongTermVision });
+  }
+  addFavoriteQuote(addFavoriteQuote) {
+    this.setState({ favoriteQuote: addFavoriteQuote });
+  }
+  addJoinedOn(addJoinedOn) {
+    this.setState({ joinedOn: addJoinedOn });
+  }
   render() {
     return (
       <div className="container">
         <NavLink to="/">
           <i className="fas fa-2x fa-angle-double-left" />
         </NavLink>
-
-        <form method="post" onSubmit={this.handleSave}>
-          <Field
-            placeholder="Photo"
-            name="addPhoto"
+        <form method="post">
+          <label htmlFor="firstName">Upload photo:</label>
+          <input
+            className="photo"
+            id="photo"
+            name="photo"
             type="file"
-            component={renderField}
-            label="Photo"
+            multiple="multiple"
+            onChange={e => this.addPhoto(e)}
           />
 
-          <Field
-            placeholder="Src"
-            name="addSrc"
-            type="text"
-            component={renderField}
-            label="Src"
-          />
-
-          <Field
-            placeholder="Alt"
-            name="addAlt"
-            type="text"
-            component={renderField}
-            label="Alt"
-          />
-
-          <Field
-            placeholder="First Name"
+          <label htmlFor="firstName">First name:</label>
+          <input
+            id="firstName"
             name="firstName"
             type="text"
-            component={renderField}
-            label="First Name"
+            placeholder="First name"
+            onChange={e => this.addFirstName(e.target.value)}
           />
 
-          <Field
-            placeholder="Last Name"
+          <label htmlFor="lastName">Last name:</label>
+          <input
+            id="lastName"
             name="lastName"
             type="text"
-            component={renderField}
-            label="Last Name"
+            placeholder="Last name"
+            onChange={e => this.addLastName(e.target.value)}
           />
 
-          <Field
+          <label htmlFor="title">Title:</label>
+          <input
+            id="title"
+            name="title"
+            type="text"
             placeholder="Title"
-            name="addTitle"
-            type="text"
-            component={renderField}
-            label="Title"
+            onChange={e => this.addTitle(e.target.value)}
           />
 
-          <Field
+          <label htmlFor="nationality">Nationality:</label>
+          <input
+            id="nationality"
+            name="nationality"
+            type="text"
             placeholder="Nationality"
-            name="addNationality"
-            type="text"
-            component={renderField}
-            label="Nationality"
+            onChange={e => this.addNationality(e.target.value)}
           />
 
-          <Field
+          <label htmlFor="skills">Skills:</label>
+          <input
+            id="skills"
+            name="skills"
+            type="text"
             placeholder="Skills"
-            name="addSkills"
-            type="text"
-            component={renderField}
-            label="Skills"
+            onChange={e => this.addSkills(e.target.value)}
           />
 
-          <Field
-            placeholder="Why a Software Developer"
-            name="addWhySofterDeveloper"
+          <label htmlFor="whySofterDeveloper">Why a software developer:</label>
+          <input
+            id="whySofterDeveloper"
+            name="whySofterDeveloper"
             type="text"
-            component={renderField}
-            label="Why a Software Developer"
+            placeholder="Why a software developer"
+            onChange={e => this.addWhySofterDeveloper(e.target.value)}
           />
 
-          <Field
-            placeholder="Motivates Me"
-            name="addMotivatesMe"
+          <label htmlFor="longTermVision">Long term vision:</label>
+          <input
+            id="longTermVision"
+            name="longTermVision"
             type="text"
-            component={renderField}
-            label="Motivates Me"
+            placeholder="Long term vision"
+            onChange={e => this.addLongTermVision(e.target.value)}
           />
 
-          <Field
-            placeholder="Long Term Vision"
-            name="addLongTermVision"
+          <label htmlFor="motivatesMe">What motivates me:</label>
+          <input
+            id="motivatesMe"
+            name="motivatesMe"
             type="text"
-            component={renderField}
-            label="Long Term Vision"
+            placeholder="What motivates me"
+            onChange={e => this.addMotivatesMe(e.target.value)}
           />
 
-          <Field
-            placeholder="Favorite Quote"
-            name="addFavoriteQuote"
+          <label htmlFor="favoriteQuote">Favorite quote:</label>
+          <input
+            id="favoriteQuote"
+            name="favoriteQuote"
             type="text"
-            component={renderField}
-            label="Favorite Quote"
+            placeholder="Favorite quote"
+            onChange={e => this.addFavoriteQuote(e.target.value)}
           />
 
-          <Field
-            placeholder="Joined On"
-            name="addJoinedOn"
+          <label htmlFor="joinedOn">Joined on:</label>
+          <input
+            id="joinedOn"
+            name="joinedOn"
             type="text"
-            component={renderField}
-            label="Joined On"
+            placeholder="Joined on"
+            onChange={e => this.addJoinedOn(e.target.value)}
           />
 
-          <button className="button-save" type="submit">
+          <button
+            className="button-save"
+            type="submit"
+            onClick={this.handleSave}
+          >
             <i className="fa fa-3x fa-check-circle" />
           </button>
           <NavLink className="button-cancel" to="/">
@@ -193,17 +248,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: payload => dispatch({ type: "ADD_STUDENT", payload })
+    handleSubmit: payload => dispatch({ type: "ADD_STUDENT", payload })
   };
 };
-
-const myForm = reduxForm({
-  form: "newStudent",
-  validate
-  // warn
-})(NewStudent);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(myForm);
+)(NewStudent);
