@@ -37,10 +37,9 @@ const renderField = ({
 );
 
 class NewStudent extends Component {
-
   handleSave = e => {
     e.preventDefault();
-    let payload = this.props.posts.form.newPost.values;
+    let payload = this.props.students.form.newStudent.values;
     const request = async () => {
       try {
         const res = await fetch("/api/newstudent", {
@@ -48,7 +47,7 @@ class NewStudent extends Component {
           headers: {
             Accept: "application/json"
           },
-          body: formData
+          body: payload
         });
         const json = await res.json().then(response => {
           this.props.onSubmit(response);
@@ -60,7 +59,6 @@ class NewStudent extends Component {
       }
     };
     request();
-
   };
 
   render() {
@@ -74,9 +72,9 @@ class NewStudent extends Component {
           <Field
             placeholder="Photo"
             name="addPhoto"
-            type="text"
+            type="file"
             component={renderField}
-            label="First Name"
+            label="Photo"
           />
 
           <Field
@@ -84,7 +82,7 @@ class NewStudent extends Component {
             name="addSrc"
             type="text"
             component={renderField}
-            label="First Name"
+            label="Src"
           />
 
           <Field
@@ -92,7 +90,7 @@ class NewStudent extends Component {
             name="addAlt"
             type="text"
             component={renderField}
-            label="First Name"
+            label="Alt"
           />
 
           <Field
@@ -132,7 +130,7 @@ class NewStudent extends Component {
             name="addSkills"
             type="text"
             component={renderField}
-            label="TSkillsemp"
+            label="Skills"
           />
 
           <Field
@@ -175,42 +173,37 @@ class NewStudent extends Component {
             label="Joined On"
           />
 
-
-          <button
-            className="button-save"
-            type="submit"
-          >
+          <button className="button-save" type="submit">
             <i className="fa fa-3x fa-check-circle" />
           </button>
           <NavLink className="button-cancel" to="/">
             <i className="fa fa-2x fa-window-close" />
           </NavLink>
+        </form>
       </div>
     );
-      }
-    }
-    
+  }
+}
+
 const mapStateToProps = state => {
   return {
-          students: state
-      };
-    };
-    
+    students: state
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
-          onSubmit: payload => dispatch({type: "ADD_STUDENT", payload })
-      };
-    };
-    
-const myForm = reduxForm({
-          form: "newStudent",
-        validate
-        // warn
-      })(NewStudent);
-      
-      export default connect(
-        mapStateToProps,
-        mapDispatchToProps
-      )(myForm);
-      
+    onSubmit: payload => dispatch({ type: "ADD_STUDENT", payload })
+  };
+};
 
+const myForm = reduxForm({
+  form: "newStudent",
+  validate
+  // warn
+})(NewStudent);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(myForm);

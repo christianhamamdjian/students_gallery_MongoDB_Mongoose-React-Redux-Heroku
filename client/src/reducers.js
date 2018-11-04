@@ -1,3 +1,6 @@
+import { combineReducers } from "redux";
+import { reducer as formReducer } from "redux-form";
+
 export const reducer = (state = [], action) => {
   switch (action.type) {
     case "GET_STUDENTS":
@@ -24,3 +27,7 @@ export const reducer = (state = [], action) => {
       return state;
   }
 };
+export const rootReducer = combineReducers({
+  myApp: reducer,
+  form: formReducer
+});
