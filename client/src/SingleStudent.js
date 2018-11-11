@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link, NavLink } from "react-router-dom";
-import loader from "./loader.gif";
+import loader from "./assets/loader.gif";
 import "./App.css";
 import { connect } from "react-redux";
 
@@ -17,6 +17,9 @@ class SingleStudent extends Component {
         alert(err);
       });
     this.props.handleRemove(removedId);
+    setTimeout(function() {
+      alert("Your information has been deleted!");
+    }, 500);
     this.props.history.push("/");
   };
 
@@ -27,31 +30,38 @@ class SingleStudent extends Component {
     if (!selectedStudent) return <img src={loader} alt="loader" />;
     return (
       <div>
-        <div className="student-nav">
-          <Link key={this.props.myId} to={"/students/edit/" + this.props.myId}>
-            <i className="fa fa-2x fa-edit" />
-          </Link>
-          <NavLink to="/">
-            <i className="fas fa-2x fa-angle-double-left" />
-          </NavLink>
-          <i
-            onClick={() => {
-              if (window.confirm("Are you sure you wish to delete this item?"))
-                this.handleDelete();
-            }}
-            className="fa fa-2x fa-trash"
-          />
+        <div className="subhead">
+          <div className="student-nav">
+            <Link
+              key={this.props.myId}
+              to={"/students/edit/" + this.props.myId}
+            >
+              <i className="fa fa-2x fa-edit" />
+            </Link>
+            <i
+              onClick={() => {
+                if (
+                  window.confirm("Are you sure you wish to delete this item?")
+                )
+                  this.handleDelete();
+              }}
+              className="fa fa-2x fa-trash"
+            />
+            <NavLink to="/">
+              <i className="fas fa-2x fa-angle-double-left" />
+            </NavLink>
+          </div>
         </div>
         <div className="student-info">
           <div className="student-info-img">
             <img width="300" alt="" src={selectedStudent.src} />
           </div>
           <div className="student-info-text">
-            <h1>
+            <h2>
               <span>{selectedStudent.firstName} </span>
               <span>{selectedStudent.lastName}</span>
-            </h1>
-            <h2>{selectedStudent.title}</h2>
+            </h2>
+            <h3>{selectedStudent.title}</h3>
             <p>
               <strong>Nationality: </strong>
               {selectedStudent.nationality}

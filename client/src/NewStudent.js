@@ -3,6 +3,14 @@ import { NavLink } from "react-router-dom";
 import "./App.css";
 import { connect } from "react-redux";
 
+function validate(firstName, lastName) {
+  return {
+    firstName:
+      firstName.length < 2 || /^[a-zäöA-ZÄÖ]+$/.test(firstName) === false,
+    lastName: lastName.length < 2 || /^[a-zäöA-ZÄÖ]+$/.test(lastName) === false
+  };
+}
+
 class NewStudent extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +28,8 @@ class NewStudent extends Component {
       motivatesMe: "",
       longTermVision: "",
       favoriteQuote: "",
-      joinedOn: ""
+      joinedOn: "",
+      inFocus: ""
     };
   }
 
@@ -56,6 +65,7 @@ class NewStudent extends Component {
     formData.append("joinedOn", joinedOn);
 
     const request = async () => {
+      document.getElementById("waiting").style.display = "block";
       try {
         const res = await fetch("/api/newstudent", {
           method: "POST",
@@ -66,6 +76,9 @@ class NewStudent extends Component {
         });
         const json = await res.json().then(response => {
           this.props.handleSubmit(response);
+          setTimeout(function() {
+            alert("Your information has been added!");
+          }, 500);
           this.props.history.push("/");
         });
         return json;
@@ -118,123 +131,141 @@ class NewStudent extends Component {
     this.setState({ joinedOn: addJoinedOn });
   }
   render() {
+    const errors = validate(this.state.firstName, this.state.lastName);
+    const isDisabled = Object.keys(errors).some(x => errors[x]);
+
     return (
-      <div className="container">
-        <NavLink to="/">
-          <i className="fas fa-2x fa-angle-double-left" />
-        </NavLink>
-        <form method="post">
-          <label htmlFor="firstName">Upload photo:</label>
-          <input
-            className="photo"
-            id="photo"
-            name="photo"
-            type="file"
-            multiple="multiple"
-            onChange={e => this.addPhoto(e)}
-          />
-
-          <label htmlFor="firstName">First name:</label>
-          <input
-            id="firstName"
-            name="firstName"
-            type="text"
-            placeholder="First name"
-            onChange={e => this.addFirstName(e.target.value)}
-          />
-
-          <label htmlFor="lastName">Last name:</label>
-          <input
-            id="lastName"
-            name="lastName"
-            type="text"
-            placeholder="Last name"
-            onChange={e => this.addLastName(e.target.value)}
-          />
-
-          <label htmlFor="title">Title:</label>
-          <input
-            id="title"
-            name="title"
-            type="text"
-            placeholder="Title"
-            onChange={e => this.addTitle(e.target.value)}
-          />
-
-          <label htmlFor="nationality">Nationality:</label>
-          <input
-            id="nationality"
-            name="nationality"
-            type="text"
-            placeholder="Nationality"
-            onChange={e => this.addNationality(e.target.value)}
-          />
-
-          <label htmlFor="skills">Skills:</label>
-          <input
-            id="skills"
-            name="skills"
-            type="text"
-            placeholder="Skills"
-            onChange={e => this.addSkills(e.target.value)}
-          />
-
-          <label htmlFor="whySofterDeveloper">Why a software developer:</label>
-          <input
-            id="whySofterDeveloper"
-            name="whySofterDeveloper"
-            type="text"
-            placeholder="Why a software developer"
-            onChange={e => this.addWhySofterDeveloper(e.target.value)}
-          />
-
-          <label htmlFor="longTermVision">Long term vision:</label>
-          <input
-            id="longTermVision"
-            name="longTermVision"
-            type="text"
-            placeholder="Long term vision"
-            onChange={e => this.addLongTermVision(e.target.value)}
-          />
-
-          <label htmlFor="motivatesMe">What motivates me:</label>
-          <input
-            id="motivatesMe"
-            name="motivatesMe"
-            type="text"
-            placeholder="What motivates me"
-            onChange={e => this.addMotivatesMe(e.target.value)}
-          />
-
-          <label htmlFor="favoriteQuote">Favorite quote:</label>
-          <input
-            id="favoriteQuote"
-            name="favoriteQuote"
-            type="text"
-            placeholder="Favorite quote"
-            onChange={e => this.addFavoriteQuote(e.target.value)}
-          />
-
-          <label htmlFor="joinedOn">Joined on:</label>
-          <input
-            id="joinedOn"
-            name="joinedOn"
-            type="text"
-            placeholder="Joined on"
-            onChange={e => this.addJoinedOn(e.target.value)}
-          />
-
-          <button
-            className="button-save"
-            type="submit"
-            onClick={this.handleSave}
-          >
-            <i className="fa fa-3x fa-check-circle" />
-          </button>
-          <NavLink className="button-cancel" to="/">
-            <i className="fa fa-2x fa-window-close" />
+      <div>
+        <div className="subhead">
+          <NavLink to="/">
+            <i className="fas fa-2x fa-angle-double-left" />
           </NavLink>
-        </form>
+        </div>
+        <div className="container">
+          <form method="post">
+            <label htmlFor="firstName">Upload photo:</label>
+            <input
+              className="photo"
+              id="photo"
+              name="photo"
+              type="file"
+              multiple="multiple"
+              onChange={e => this.addPhoto(e)}
+            />
+            <label htmlFor="firstName">First name:</label>
+            <input
+              className={errors.firstName ? "error" : ""}
+              id="firstName"
+              name="firstName"
+              type="text"
+              placeholder="First name"
+              onChange={e => this.addFirstName(e.target.value)}
+            />
+            <div className={errors.firstName ? "invalid" : "valid"}>
+              First name is required
+            </div>
+
+            <label htmlFor="lastName">Last name:</label>
+            <input
+              className={errors.lastName ? "error" : ""}
+              id="lastName"
+              name="lastName"
+              type="text"
+              placeholder="Last name"
+              onChange={e => this.addLastName(e.target.value)}
+            />
+            <div className={errors.lastName ? "invalid" : "valid"}>
+              Last name is required
+            </div>
+            <label htmlFor="title">Title:</label>
+            <input
+              id="title"
+              name="title"
+              type="text"
+              placeholder="Title"
+              onChange={e => this.addTitle(e.target.value)}
+            />
+
+            <label htmlFor="nationality">Nationality:</label>
+            <input
+              id="nationality"
+              name="nationality"
+              type="text"
+              placeholder="Nationality"
+              onChange={e => this.addNationality(e.target.value)}
+            />
+
+            <label htmlFor="skills">Skills:</label>
+            <input
+              id="skills"
+              name="skills"
+              type="text"
+              placeholder="Skills"
+              onChange={e => this.addSkills(e.target.value)}
+            />
+
+            <label htmlFor="whySofterDeveloper">
+              Why a software developer:
+            </label>
+            <input
+              id="whySofterDeveloper"
+              name="whySofterDeveloper"
+              type="text"
+              placeholder="Why a software developer"
+              onChange={e => this.addWhySofterDeveloper(e.target.value)}
+            />
+
+            <label htmlFor="longTermVision">Long term vision:</label>
+            <input
+              id="longTermVision"
+              name="longTermVision"
+              type="text"
+              placeholder="Long term vision"
+              onChange={e => this.addLongTermVision(e.target.value)}
+            />
+
+            <label htmlFor="motivatesMe">What motivates me:</label>
+            <input
+              id="motivatesMe"
+              name="motivatesMe"
+              type="text"
+              placeholder="What motivates me"
+              onChange={e => this.addMotivatesMe(e.target.value)}
+            />
+
+            <label htmlFor="favoriteQuote">Favorite quote:</label>
+            <input
+              id="favoriteQuote"
+              name="favoriteQuote"
+              type="text"
+              placeholder="Favorite quote"
+              onChange={e => this.addFavoriteQuote(e.target.value)}
+            />
+
+            <label htmlFor="joinedOn">Joined on:</label>
+            <input
+              id="joinedOn"
+              name="joinedOn"
+              type="text"
+              placeholder="Joined on"
+              onChange={e => this.addJoinedOn(e.target.value)}
+            />
+            <div className="form-submit">
+              <button
+                className="button-save"
+                type="submit"
+                disabled={isDisabled}
+                onClick={this.handleSave}
+              >
+                <i className="fa fa-3x fa-check-circle" />
+              </button>
+              <NavLink className="button-cancel" to="/">
+                <i className="fa fa-2x fa-window-close" />
+              </NavLink>
+            </div>
+            <div id="waiting">Uploading information ...</div>
+          </form>
+        </div>
       </div>
     );
   }

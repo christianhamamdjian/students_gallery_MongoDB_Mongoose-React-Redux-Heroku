@@ -3,6 +3,14 @@ import { NavLink } from "react-router-dom";
 import "./App.css";
 import { connect } from "react-redux";
 
+function validate(firstName, lastName) {
+  return {
+    firstName:
+      firstName.length < 2 || /^[a-zäöA-ZÄÖ]+$/.test(firstName) === false,
+    lastName: lastName.length < 2 || /^[a-zäöA-ZÄÖ]+$/.test(lastName) === false
+  };
+}
+
 class EditStudent extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +31,8 @@ class EditStudent extends Component {
       motivatesMe: selectedStudent.motivatesMe || "",
       longTermVision: selectedStudent.longTermVision || "",
       favoriteQuote: selectedStudent.favoriteQuote || "",
-      joinedOn: selectedStudent.joinedOn || ""
+      joinedOn: selectedStudent.joinedOn || "",
+      inFocus: ""
     };
   }
 
@@ -60,6 +69,7 @@ class EditStudent extends Component {
     formData.append("joinedOn", newJoinedOn);
 
     const request = async () => {
+      document.getElementById("waiting-update").style.display = "block";
       try {
         const res = await fetch(`/api/update/${_id}`, {
           method: "PUT",
@@ -68,8 +78,12 @@ class EditStudent extends Component {
           },
           body: formData
         });
+
         const json = await res.json().then(response => {
           this.props.handleSubmit(response);
+          setTimeout(function() {
+            alert("Your information has been updated!");
+          }, 500);
           this.props.history.push("/");
         });
         return json;
@@ -122,135 +136,151 @@ class EditStudent extends Component {
   }
 
   render() {
+    const errors = validate(this.state.firstName, this.state.lastName);
+    const isDisabled = Object.keys(errors).some(x => errors[x]);
     return (
-      <div className="container">
-        <NavLink to="/">
-          <i className="fas fa-2x fa-angle-double-left" />
-        </NavLink>
-
-        <form method="put">
-          <input
-            id="photo"
-            name="photo"
-            type="file"
-            multiple="multiple"
-            onChange={e => this.changePhoto(e)}
-          />
-
-          <label htmlFor="firstName">First name:</label>
-          <input
-            id="firstName"
-            name="firstName"
-            type="text"
-            placeholder="First name"
-            value={this.state.firstName}
-            onChange={e => this.changeFirstName(e.target.value)}
-          />
-
-          <label htmlFor="lastName">Last name:</label>
-          <input
-            id="lastName"
-            name="lastName"
-            type="text"
-            placeholder="Last name"
-            value={this.state.lastName}
-            onChange={e => this.changeLastName(e.target.value)}
-          />
-
-          <label htmlFor="title">Title:</label>
-          <input
-            id="title"
-            name="title"
-            type="text"
-            placeholder="Title"
-            value={this.state.title}
-            onChange={e => this.changeTitle(e.target.value)}
-          />
-
-          <label htmlFor="nationality">Nationality:</label>
-          <input
-            id="nationality"
-            name="nationality"
-            type="text"
-            placeholder="Nationality"
-            value={this.state.nationality}
-            onChange={e => this.changeNationality(e.target.value)}
-          />
-
-          <label htmlFor="skills">Skills:</label>
-          <input
-            id="skills"
-            name="skills"
-            type="text"
-            placeholder="Skills"
-            value={this.state.skills}
-            onChange={e => this.changeSkills(e.target.value)}
-          />
-
-          <label htmlFor="whySofterDeveloper">Why a software developer:</label>
-          <input
-            id="whySofterDeveloper"
-            name="whySofterDeveloper"
-            type="text"
-            placeholder="Why a software developer"
-            value={this.state.whySofterDeveloper}
-            onChange={e => this.changeWhySofterDeveloper(e.target.value)}
-          />
-
-          <label htmlFor="longTermVision">Long term vision:</label>
-          <input
-            id="longTermVision"
-            name="longTermVision"
-            type="text"
-            placeholder="Long term vision"
-            value={this.state.longTermVision}
-            onChange={e => this.changeLongTermVision(e.target.value)}
-          />
-
-          <label htmlFor="motivatesMe">What motivates me:</label>
-          <input
-            id="motivatesMe"
-            name="motivatesMe"
-            type="text"
-            placeholder="What motivates me"
-            value={this.state.motivatesMe}
-            onChange={e => this.changeMotivatesMe(e.target.value)}
-          />
-
-          <label htmlFor="favoriteQuote">Favorite quote:</label>
-          <input
-            id="favoriteQuote"
-            name="favoriteQuote"
-            type="text"
-            placeholder="Favorite quote"
-            value={this.state.favoriteQuote}
-            onChange={e => this.changeFavoriteQuote(e.target.value)}
-          />
-
-          <label htmlFor="joinedOn">Joined on:</label>
-          <input
-            id="joinedOn"
-            name="joinedOn"
-            type="text"
-            placeholder="Joined on"
-            value={this.state.joinedOn}
-            onChange={e => this.changeJoinedOn(e.target.value)}
-          />
-
-          <button
-            className="button-update"
-            type="submit"
-            onClick={this.handleUpdate}
-          >
-            <i className="fa fa-3x fa-check-circle" />
-          </button>
-          <NavLink
-            className="button-cancel"
-            to={"/students/" + this.props.myId}
-          >
-            <i className="fa fa-2x fa-window-close" />
+      <div>
+        <div className="subhead">
+          <NavLink to="/">
+            <i className="fas fa-2x fa-angle-double-left" />
           </NavLink>
-        </form>
+        </div>
+        <div className="container">
+          <form method="put">
+            <input
+              id="photo"
+              name="photo"
+              type="file"
+              multiple="multiple"
+              onChange={e => this.changePhoto(e)}
+            />
+
+            <label htmlFor="firstName">First name:</label>
+            <input
+              className={errors.firstName ? "error" : ""}
+              id="firstName"
+              name="firstName"
+              type="text"
+              placeholder={
+                errors.firstName ? "First name is required" : "First name"
+              }
+              value={this.state.firstName}
+              onChange={e => this.changeFirstName(e.target.value)}
+            />
+
+            <label htmlFor="lastName">Last name:</label>
+            <input
+              className={errors.lastName ? "error" : ""}
+              id="lastName"
+              name="lastName"
+              type="text"
+              placeholder={
+                errors.lastName ? "Last name is required" : "Last name"
+              }
+              value={this.state.lastName}
+              onChange={e => this.changeLastName(e.target.value)}
+            />
+
+            <label htmlFor="title">Title:</label>
+            <input
+              id="title"
+              name="title"
+              type="text"
+              placeholder="Title"
+              value={this.state.title}
+              onChange={e => this.changeTitle(e.target.value)}
+            />
+
+            <label htmlFor="nationality">Nationality:</label>
+            <input
+              id="nationality"
+              name="nationality"
+              type="text"
+              placeholder="Nationality"
+              value={this.state.nationality}
+              onChange={e => this.changeNationality(e.target.value)}
+            />
+
+            <label htmlFor="skills">Skills:</label>
+            <input
+              id="skills"
+              name="skills"
+              type="text"
+              placeholder="Skills"
+              value={this.state.skills}
+              onChange={e => this.changeSkills(e.target.value)}
+            />
+
+            <label htmlFor="whySofterDeveloper">
+              Why a software developer:
+            </label>
+            <input
+              id="whySofterDeveloper"
+              name="whySofterDeveloper"
+              type="text"
+              placeholder="Why a software developer"
+              value={this.state.whySofterDeveloper}
+              onChange={e => this.changeWhySofterDeveloper(e.target.value)}
+            />
+
+            <label htmlFor="longTermVision">Long term vision:</label>
+            <input
+              id="longTermVision"
+              name="longTermVision"
+              type="text"
+              placeholder="Long term vision"
+              value={this.state.longTermVision}
+              onChange={e => this.changeLongTermVision(e.target.value)}
+            />
+
+            <label htmlFor="motivatesMe">What motivates me:</label>
+            <input
+              id="motivatesMe"
+              name="motivatesMe"
+              type="text"
+              placeholder="What motivates me"
+              value={this.state.motivatesMe}
+              onChange={e => this.changeMotivatesMe(e.target.value)}
+            />
+
+            <label htmlFor="favoriteQuote">Favorite quote:</label>
+            <input
+              id="favoriteQuote"
+              name="favoriteQuote"
+              type="text"
+              placeholder="Favorite quote"
+              value={this.state.favoriteQuote}
+              onChange={e => this.changeFavoriteQuote(e.target.value)}
+            />
+
+            <label htmlFor="joinedOn">Joined on:</label>
+            <input
+              id="joinedOn"
+              name="joinedOn"
+              type="text"
+              placeholder="Joined on"
+              value={this.state.joinedOn}
+              onChange={e => this.changeJoinedOn(e.target.value)}
+            />
+            <div className="form-submit">
+              <button
+                className="button-update"
+                type="submit"
+                disabled={isDisabled}
+                onClick={this.handleUpdate}
+              >
+                <i className="fa fa-3x fa-check-circle" />
+              </button>
+              <NavLink
+                className="button-cancel"
+                to={"/students/" + this.props.myId}
+              >
+                <i className="fa fa-2x fa-window-close" />
+              </NavLink>
+            </div>
+            <div id="waiting-update">Updating information ...</div>
+          </form>
+        </div>
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link, NavLink } from "react-router-dom";
-import loader from "./loader.gif";
+import loader from "./assets/loader.gif";
 import "./App.css";
 import { connect } from "react-redux";
 
@@ -15,30 +15,33 @@ class StudentsGallery extends Component {
       );
     }
     return (
-      <div>
-        <NavLink exact to="/new-student">
-          <i className="fas fa-3x fa-plus-circle" />
-        </NavLink>
-        <div>
+      <div className="page">
+        <div className="subhead">
+          <NavLink exact to="/new-student">
+            <i className="fas fa-3x fa-plus-circle" />
+          </NavLink>
+        </div>
+        <div className="gallery">
           <ul>
             {this.props.students.map(student => (
-              <li className="student-card">
-                <div className="image-container">
-                  <img alt="" src={student.src} />
-                </div>
-                <div className="info-container">
-                  <div className="info-container-text">
-                    <h2 className="name">
-                      <span>{student.firstName} </span>
-                      <span>{student.lastName}</span>
-                    </h2>
-                    <h3 className="title">{student.title}</h3>
+              <Link key={student._id} to={"/students/" + student._id}>
+                <li key={student._id} className="student-card">
+                  <div className="image-container">
+                    <img alt="" src={student.src} />
                   </div>
-                  <Link key={student._id} to={"/students/" + student._id}>
-                    <i className="fa fa-lg fa-info-circle" aria-hidden="true" />
-                  </Link>
-                </div>
-              </li>
+                  <div className="info-container">
+                    <div className="info-container-text">
+                      <h2 className="name">
+                        <span>{student.firstName} </span>
+                        <span>{student.lastName}</span>
+                      </h2>
+                      <h3 className="title">{student.title}</h3>
+                    </div>
+
+                    {/* <i className="fa fa-lg fa-info-circle" aria-hidden="true" /> */}
+                  </div>
+                </li>
+              </Link>
             ))}
           </ul>
         </div>
