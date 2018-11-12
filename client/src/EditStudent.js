@@ -2,14 +2,7 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import "./App.css";
 import { connect } from "react-redux";
-
-function validate(firstName, lastName) {
-  return {
-    firstName:
-      firstName.length < 2 || /^[a-zäöA-ZÄÖ]+$/.test(firstName) === false,
-    lastName: lastName.length < 2 || /^[a-zäöA-ZÄÖ]+$/.test(lastName) === false
-  };
-}
+import * as utils from "./utils";
 
 class EditStudent extends Component {
   constructor(props) {
@@ -42,31 +35,20 @@ class EditStudent extends Component {
     const newPhoto = this.state.photo;
     const newSrc = this.state.src;
     const newAlt = this.state.alt;
-    const newFirstName = this.state.firstName;
-    const newLastName = this.state.lastName;
-    const newTitle = this.state.title;
-    const newNationality = this.state.nationality;
-    const newSkills = this.state.skills;
-    const newWhySofterDeveloper = this.state.whySofterDeveloper;
-    const newMotivatesMe = this.state.motivatesMe;
-    const newLongTermVision = this.state.longTermVision;
-    const newFavoriteQuote = this.state.favoriteQuote;
-    const newJoinedOn = this.state.joinedOn;
-
     const formData = new FormData();
     formData.append("photo", newPhoto);
     formData.append("src", newSrc);
     formData.append("alt", newAlt);
-    formData.append("firstName", newFirstName);
-    formData.append("lastName", newLastName);
-    formData.append("title", newTitle);
-    formData.append("nationality", newNationality);
-    formData.append("skills", newSkills);
-    formData.append("whySofterDeveloper", newWhySofterDeveloper);
-    formData.append("longTermVision", newLongTermVision);
-    formData.append("motivatesMe", newMotivatesMe);
-    formData.append("favoriteQuote", newFavoriteQuote);
-    formData.append("joinedOn", newJoinedOn);
+    formData.append("firstName", this.state.firstName);
+    formData.append("lastName", this.state.lastName);
+    formData.append("title", this.state.title);
+    formData.append("nationality", this.state.nationality);
+    formData.append("skills", this.state.skills);
+    formData.append("whySofterDeveloper", this.state.whySofterDeveloper);
+    formData.append("longTermVision", this.state.longTermVision);
+    formData.append("motivatesMe", this.state.motivatesMe);
+    formData.append("favoriteQuote", this.state.favoriteQuote);
+    formData.append("joinedOn", this.state.joinedOn);
 
     const request = async () => {
       document.getElementById("waiting-update").style.display = "block";
@@ -93,50 +75,20 @@ class EditStudent extends Component {
     };
     request();
   };
-  changePhoto(changePhoto) {
-    this.setState({ photo: changePhoto.target.files[0] });
-  }
-  changeSrc(changeSrc) {
-    this.setState({ src: changeSrc });
-  }
-  changeAlt(changeAlt) {
-    this.setState({ alt: changeAlt });
-  }
-  changeFirstName(changeFirstName) {
-    this.setState({ firstName: changeFirstName });
-  }
-  changeLastName(changeLastName) {
-    this.setState({ lastName: changeLastName });
-  }
-  changeTitle(changedTitle) {
+  handleOnChange = e => {
+    const {
+      target: { value, name }
+    } = e;
     this.setState({
-      title: changedTitle
+      [name]: value
     });
-  }
-  changeNationality(changeNationality) {
-    this.setState({ nationality: changeNationality });
-  }
-  changeSkills(changeSkills) {
-    this.setState({ skills: changeSkills });
-  }
-  changeWhySofterDeveloper(changeWhySofterDeveloper) {
-    this.setState({ whySofterDeveloper: changeWhySofterDeveloper });
-  }
-  changeMotivatesMe(changeMotivatesMe) {
-    this.setState({ motivatesMe: changeMotivatesMe });
-  }
-  changeLongTermVision(changeLongTermVision) {
-    this.setState({ longTermVision: changeLongTermVision });
-  }
-  changeFavoriteQuote(changeFavoriteQuote) {
-    this.setState({ favoriteQuote: changeFavoriteQuote });
-  }
-  changeJoinedOn(changeJoinedOn) {
-    this.setState({ joinedOn: changeJoinedOn });
+  };
+  changePhoto(e) {
+    this.setState({ photo: e.target.files[0] });
   }
 
   render() {
-    const errors = validate(this.state.firstName, this.state.lastName);
+    const errors = utils.validate(this.state.firstName, this.state.lastName);
     const isDisabled = Object.keys(errors).some(x => errors[x]);
     return (
       <div>
@@ -147,26 +99,28 @@ class EditStudent extends Component {
         </div>
         <div className="container">
           <form method="put">
+            <label htmlFor="photo">Update photo:</label>
             <input
+              className="photo"
               id="photo"
               name="photo"
               type="file"
               multiple="multiple"
               onChange={e => this.changePhoto(e)}
             />
-
             <label htmlFor="firstName">First name:</label>
             <input
               className={errors.firstName ? "error" : ""}
               id="firstName"
               name="firstName"
               type="text"
-              placeholder={
-                errors.firstName ? "First name is required" : "First name"
-              }
+              placeholder="First name"
               value={this.state.firstName}
-              onChange={e => this.changeFirstName(e.target.value)}
+              onChange={this.handleOnChange}
             />
+            <div className={errors.firstName ? "invalid" : "valid"}>
+              First name is required
+            </div>
 
             <label htmlFor="lastName">Last name:</label>
             <input
@@ -174,13 +128,13 @@ class EditStudent extends Component {
               id="lastName"
               name="lastName"
               type="text"
-              placeholder={
-                errors.lastName ? "Last name is required" : "Last name"
-              }
+              placeholder="Last name"
               value={this.state.lastName}
-              onChange={e => this.changeLastName(e.target.value)}
+              onChange={this.handleOnChange}
             />
-
+            <div className={errors.lastName ? "invalid" : "valid"}>
+              Last name is required
+            </div>
             <label htmlFor="title">Title:</label>
             <input
               id="title"
@@ -188,7 +142,7 @@ class EditStudent extends Component {
               type="text"
               placeholder="Title"
               value={this.state.title}
-              onChange={e => this.changeTitle(e.target.value)}
+              onChange={this.handleOnChange}
             />
 
             <label htmlFor="nationality">Nationality:</label>
@@ -198,7 +152,7 @@ class EditStudent extends Component {
               type="text"
               placeholder="Nationality"
               value={this.state.nationality}
-              onChange={e => this.changeNationality(e.target.value)}
+              onChange={this.handleOnChange}
             />
 
             <label htmlFor="skills">Skills:</label>
@@ -208,7 +162,7 @@ class EditStudent extends Component {
               type="text"
               placeholder="Skills"
               value={this.state.skills}
-              onChange={e => this.changeSkills(e.target.value)}
+              onChange={this.handleOnChange}
             />
 
             <label htmlFor="whySofterDeveloper">
@@ -220,7 +174,7 @@ class EditStudent extends Component {
               type="text"
               placeholder="Why a software developer"
               value={this.state.whySofterDeveloper}
-              onChange={e => this.changeWhySofterDeveloper(e.target.value)}
+              onChange={this.handleOnChange}
             />
 
             <label htmlFor="longTermVision">Long term vision:</label>
@@ -230,7 +184,7 @@ class EditStudent extends Component {
               type="text"
               placeholder="Long term vision"
               value={this.state.longTermVision}
-              onChange={e => this.changeLongTermVision(e.target.value)}
+              onChange={this.handleOnChange}
             />
 
             <label htmlFor="motivatesMe">What motivates me:</label>
@@ -240,7 +194,7 @@ class EditStudent extends Component {
               type="text"
               placeholder="What motivates me"
               value={this.state.motivatesMe}
-              onChange={e => this.changeMotivatesMe(e.target.value)}
+              onChange={this.handleOnChange}
             />
 
             <label htmlFor="favoriteQuote">Favorite quote:</label>
@@ -250,7 +204,7 @@ class EditStudent extends Component {
               type="text"
               placeholder="Favorite quote"
               value={this.state.favoriteQuote}
-              onChange={e => this.changeFavoriteQuote(e.target.value)}
+              onChange={this.handleOnChange}
             />
 
             <label htmlFor="joinedOn">Joined on:</label>
@@ -260,11 +214,11 @@ class EditStudent extends Component {
               type="text"
               placeholder="Joined on"
               value={this.state.joinedOn}
-              onChange={e => this.changeJoinedOn(e.target.value)}
+              onChange={this.handleOnChange}
             />
             <div className="form-submit">
               <button
-                className="button-update"
+                className="button-save"
                 type="submit"
                 disabled={isDisabled}
                 onClick={this.handleUpdate}

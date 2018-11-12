@@ -2,19 +2,11 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import "./App.css";
 import { connect } from "react-redux";
-
-function validate(firstName, lastName) {
-  return {
-    firstName:
-      firstName.length < 2 || /^[a-zäöA-ZÄÖ]+$/.test(firstName) === false,
-    lastName: lastName.length < 2 || /^[a-zäöA-ZÄÖ]+$/.test(lastName) === false
-  };
-}
+import * as utils from "./utils";
 
 class NewStudent extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       photo: "",
       src: "",
@@ -35,34 +27,20 @@ class NewStudent extends Component {
 
   handleSave = e => {
     e.preventDefault();
-    const photo = this.state.photo;
-    const src = this.state.photo.name;
-    const alt = this.state.photo.name;
-    const firstName = this.state.firstName;
-    const lastName = this.state.lastName;
-    const title = this.state.title;
-    const nationality = this.state.nationality;
-    const skills = this.state.skills;
-    const whySofterDeveloper = this.state.whySofterDeveloper;
-    const longTermVision = this.state.longTermVision;
-    const motivatesMe = this.state.motivatesMe;
-    const favoriteQuote = this.state.favoriteQuote;
-    const joinedOn = this.state.joinedOn;
-
     const formData = new FormData();
-    formData.append("photo", photo);
-    formData.append("src", src);
-    formData.append("alt", alt);
-    formData.append("firstName", firstName);
-    formData.append("lastName", lastName);
-    formData.append("title", title);
-    formData.append("nationality", nationality);
-    formData.append("skills", skills);
-    formData.append("whySofterDeveloper", whySofterDeveloper);
-    formData.append("longTermVision", longTermVision);
-    formData.append("motivatesMe", motivatesMe);
-    formData.append("favoriteQuote", favoriteQuote);
-    formData.append("joinedOn", joinedOn);
+    formData.append("photo", this.state.photo);
+    formData.append("src", this.state.photo.name);
+    formData.append("alt", this.state.photo.name);
+    formData.append("firstName", this.state.firstName);
+    formData.append("lastName", this.state.lastName);
+    formData.append("title", this.state.title);
+    formData.append("nationality", this.state.nationality);
+    formData.append("skills", this.state.skills);
+    formData.append("whySofterDeveloper", this.state.whySofterDeveloper);
+    formData.append("longTermVision", this.state.longTermVision);
+    formData.append("motivatesMe", this.state.motivatesMe);
+    formData.append("favoriteQuote", this.state.favoriteQuote);
+    formData.append("joinedOn", this.state.joinedOn);
 
     const request = async () => {
       document.getElementById("waiting").style.display = "block";
@@ -89,49 +67,20 @@ class NewStudent extends Component {
     request();
   };
 
-  addPhoto(addPhoto) {
-    this.setState({ photo: addPhoto.target.files[0] });
-  }
-  addSrc(addSrc) {
-    this.setState({ src: addSrc });
-  }
-  addAlt(addAlt) {
-    this.setState({ alt: addAlt });
-  }
-  addFirstName(addFirstName) {
-    this.setState({ firstName: addFirstName });
-  }
-  addLastName(addLastName) {
-    this.setState({ lastName: addLastName });
-  }
-  addTitle(addTitle) {
+  handleOnChange = e => {
+    const {
+      target: { value, name }
+    } = e;
     this.setState({
-      title: addTitle
+      [name]: value
     });
+  };
+  changePhoto(e) {
+    this.setState({ photo: e.target.files[0] });
   }
-  addNationality(addNationality) {
-    this.setState({ nationality: addNationality });
-  }
-  addSkills(addSkills) {
-    this.setState({ skills: addSkills });
-  }
-  addWhySofterDeveloper(addWhySofterDeveloper) {
-    this.setState({ whySofterDeveloper: addWhySofterDeveloper });
-  }
-  addMotivatesMe(addMotivatesMe) {
-    this.setState({ motivatesMe: addMotivatesMe });
-  }
-  addLongTermVision(addLongTermVision) {
-    this.setState({ longTermVision: addLongTermVision });
-  }
-  addFavoriteQuote(addFavoriteQuote) {
-    this.setState({ favoriteQuote: addFavoriteQuote });
-  }
-  addJoinedOn(addJoinedOn) {
-    this.setState({ joinedOn: addJoinedOn });
-  }
+
   render() {
-    const errors = validate(this.state.firstName, this.state.lastName);
+    const errors = utils.validate(this.state.firstName, this.state.lastName);
     const isDisabled = Object.keys(errors).some(x => errors[x]);
 
     return (
@@ -143,14 +92,14 @@ class NewStudent extends Component {
         </div>
         <div className="container">
           <form method="post">
-            <label htmlFor="firstName">Upload photo:</label>
+            <label htmlFor="photo">Upload photo:</label>
             <input
               className="photo"
               id="photo"
               name="photo"
               type="file"
               multiple="multiple"
-              onChange={e => this.addPhoto(e)}
+              onChange={e => this.changePhoto(e)}
             />
             <label htmlFor="firstName">First name:</label>
             <input
@@ -159,7 +108,8 @@ class NewStudent extends Component {
               name="firstName"
               type="text"
               placeholder="First name"
-              onChange={e => this.addFirstName(e.target.value)}
+              value={this.state.firstName}
+              onChange={this.handleOnChange}
             />
             <div className={errors.firstName ? "invalid" : "valid"}>
               First name is required
@@ -172,7 +122,8 @@ class NewStudent extends Component {
               name="lastName"
               type="text"
               placeholder="Last name"
-              onChange={e => this.addLastName(e.target.value)}
+              value={this.state.lastName}
+              onChange={this.handleOnChange}
             />
             <div className={errors.lastName ? "invalid" : "valid"}>
               Last name is required
@@ -183,7 +134,8 @@ class NewStudent extends Component {
               name="title"
               type="text"
               placeholder="Title"
-              onChange={e => this.addTitle(e.target.value)}
+              value={this.state.title}
+              onChange={this.handleOnChange}
             />
 
             <label htmlFor="nationality">Nationality:</label>
@@ -192,7 +144,8 @@ class NewStudent extends Component {
               name="nationality"
               type="text"
               placeholder="Nationality"
-              onChange={e => this.addNationality(e.target.value)}
+              value={this.state.nationality}
+              onChange={this.handleOnChange}
             />
 
             <label htmlFor="skills">Skills:</label>
@@ -201,7 +154,8 @@ class NewStudent extends Component {
               name="skills"
               type="text"
               placeholder="Skills"
-              onChange={e => this.addSkills(e.target.value)}
+              value={this.state.skills}
+              onChange={this.handleOnChange}
             />
 
             <label htmlFor="whySofterDeveloper">
@@ -212,7 +166,8 @@ class NewStudent extends Component {
               name="whySofterDeveloper"
               type="text"
               placeholder="Why a software developer"
-              onChange={e => this.addWhySofterDeveloper(e.target.value)}
+              value={this.state.whySofterDeveloper}
+              onChange={this.handleOnChange}
             />
 
             <label htmlFor="longTermVision">Long term vision:</label>
@@ -221,7 +176,8 @@ class NewStudent extends Component {
               name="longTermVision"
               type="text"
               placeholder="Long term vision"
-              onChange={e => this.addLongTermVision(e.target.value)}
+              value={this.state.longTermVision}
+              onChange={this.handleOnChange}
             />
 
             <label htmlFor="motivatesMe">What motivates me:</label>
@@ -230,7 +186,8 @@ class NewStudent extends Component {
               name="motivatesMe"
               type="text"
               placeholder="What motivates me"
-              onChange={e => this.addMotivatesMe(e.target.value)}
+              value={this.state.motivatesMe}
+              onChange={this.handleOnChange}
             />
 
             <label htmlFor="favoriteQuote">Favorite quote:</label>
@@ -239,7 +196,8 @@ class NewStudent extends Component {
               name="favoriteQuote"
               type="text"
               placeholder="Favorite quote"
-              onChange={e => this.addFavoriteQuote(e.target.value)}
+              value={this.state.favoriteQuote}
+              onChange={this.handleOnChange}
             />
 
             <label htmlFor="joinedOn">Joined on:</label>
@@ -248,7 +206,8 @@ class NewStudent extends Component {
               name="joinedOn"
               type="text"
               placeholder="Joined on"
-              onChange={e => this.addJoinedOn(e.target.value)}
+              value={this.state.joinedOn}
+              onChange={this.handleOnChange}
             />
             <div className="form-submit">
               <button
