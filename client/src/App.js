@@ -9,10 +9,11 @@ import integrifyLogo from "./assets/integrify_logo.png";
 import "./App.css";
 import { connect } from "react-redux";
 
-import NewStudent from "./NewStudent";
-import SingleStudent from "./SingleStudent";
-import StudentsGallery from "./StudentsGallery";
-import EditStudent from "./EditStudent";
+import NewStudent from "./components/NewStudent";
+import SingleStudent from "./components/SingleStudent";
+import StudentsGallery from "./components/StudentsGallery";
+import EditStudent from "./components/EditStudent";
+import { getStudents } from "./store/actions";
 
 const NotFound = () => {
   return <h2> The page was not found</h2>;
@@ -20,18 +21,7 @@ const NotFound = () => {
 
 class App extends Component {
   componentDidMount() {
-    const request = async () => {
-      try {
-        const res = await fetch("/api/students");
-        const json = await res
-          .json()
-          .then(students => this.props.getStudents(students));
-        return json;
-      } catch (err) {
-        alert(err);
-      }
-    };
-    request();
+    this.props.getStudents();
   }
 
   render() {
@@ -88,16 +78,8 @@ class App extends Component {
 const mapStateToProps = state => {
   return { students: state };
 };
-const mapDispatchToProps = dispatch => {
-  return {
-    getStudents: students =>
-      dispatch({
-        type: "GET_STUDENTS",
-        students
-      })
-  };
-};
+
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { getStudents }
 )(App);

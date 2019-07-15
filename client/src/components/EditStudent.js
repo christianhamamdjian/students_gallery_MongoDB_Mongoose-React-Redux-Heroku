@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import "./App.css";
+import PropTypes from "prop-types";
+import "../App.css";
 import { connect } from "react-redux";
-import * as utils from "./utils";
+import * as utils from "../utils";
+import { updateStudent } from "../store/actions";
 
 class EditStudent extends Component {
   constructor(props) {
@@ -50,30 +52,9 @@ class EditStudent extends Component {
     formData.append("favoriteQuote", this.state.favoriteQuote);
     formData.append("joinedOn", this.state.joinedOn);
 
-    const request = async () => {
-      document.getElementById("waiting-update").style.display = "block";
-      try {
-        const res = await fetch(`/api/update/${_id}`, {
-          method: "PUT",
-          headers: {
-            Accept: "application/json"
-          },
-          body: formData
-        });
-
-        const json = await res.json().then(response => {
-          this.props.handleSubmit(response);
-          setTimeout(function() {
-            alert("Your information has been updated!");
-          }, 500);
-          this.props.history.push("/");
-        });
-        return json;
-      } catch (err) {
-        alert(err);
-      }
-    };
-    request();
+    document.getElementById("waiting-update").style.display = "block";
+    const history = this.props.history;
+    this.props.updateStudent(formData, _id, history);
   };
   handleOnChange = e => {
     const {
@@ -90,6 +71,85 @@ class EditStudent extends Component {
   render() {
     const errors = utils.validate(this.state.firstName, this.state.lastName);
     const isDisabled = Object.keys(errors).some(x => errors[x]);
+    const inputInfo = [
+      {
+        id: "title",
+        name: "title",
+        type: "text",
+        placeholder: "Title",
+        value: this.state.title,
+        onChange: this.handleOnChange
+      },
+      {
+        id: "nationality",
+        name: "nationality",
+        type: "text",
+        placeholder: "Nationality",
+        value: this.state.nationality,
+        onChange: this.handleOnChange
+      },
+      {
+        id: "skills",
+        name: "skills",
+        type: "text",
+        placeholder: "Skills",
+        value: this.state.skills,
+        onChange: this.handleOnChange
+      },
+      {
+        id: "whySofterDeveloper",
+        name: "whySofterDeveloper",
+        type: "text",
+        placeholder: "Why a software developer",
+        value: this.state.whySofterDeveloper,
+        onChange: this.handleOnChange
+      },
+      {
+        id: "longTermVision",
+        name: "longTermVision",
+        type: "text",
+        placeholder: "Long term vision",
+        value: this.state.longTermVision,
+        onChange: this.handleOnChange
+      },
+      {
+        id: "motivatesMe",
+        name: "motivatesMe",
+        type: "text",
+        placeholder: "What motivates me",
+        value: this.state.motivatesMe,
+        onChange: this.handleOnChange
+      },
+      {
+        id: "favoriteQuote",
+        name: "favoriteQuote",
+        type: "text",
+        placeholder: "Favorite quote",
+        value: this.state.favoriteQuote,
+        onChange: this.handleOnChange
+      },
+      {
+        id: "joinedOn",
+        name: "joinedOn",
+        type: "text",
+        placeholder: "Joined on",
+        value: this.state.joinedOn,
+        onChange: this.handleOnChange
+      }
+    ];
+    const inputField = inputInfo.map(input => (
+      <div>
+        <label htmlFor={input.name}>{input.placeholder}:</label>
+        <input
+          id={input.id}
+          name={input.name}
+          type={input.type}
+          placeholder={input.placeholder}
+          value={input.value}
+          onChange={input.onChange}
+        />
+      </div>
+    ));
     return (
       <div>
         <div className="subhead">
@@ -135,87 +195,7 @@ class EditStudent extends Component {
             <div className={errors.lastName ? "invalid" : "valid"}>
               Last name is required
             </div>
-            <label htmlFor="title">Title:</label>
-            <input
-              id="title"
-              name="title"
-              type="text"
-              placeholder="Title"
-              value={this.state.title}
-              onChange={this.handleOnChange}
-            />
-
-            <label htmlFor="nationality">Nationality:</label>
-            <input
-              id="nationality"
-              name="nationality"
-              type="text"
-              placeholder="Nationality"
-              value={this.state.nationality}
-              onChange={this.handleOnChange}
-            />
-
-            <label htmlFor="skills">Skills:</label>
-            <input
-              id="skills"
-              name="skills"
-              type="text"
-              placeholder="Skills"
-              value={this.state.skills}
-              onChange={this.handleOnChange}
-            />
-
-            <label htmlFor="whySofterDeveloper">
-              Why a software developer:
-            </label>
-            <input
-              id="whySofterDeveloper"
-              name="whySofterDeveloper"
-              type="text"
-              placeholder="Why a software developer"
-              value={this.state.whySofterDeveloper}
-              onChange={this.handleOnChange}
-            />
-
-            <label htmlFor="longTermVision">Long term vision:</label>
-            <input
-              id="longTermVision"
-              name="longTermVision"
-              type="text"
-              placeholder="Long term vision"
-              value={this.state.longTermVision}
-              onChange={this.handleOnChange}
-            />
-
-            <label htmlFor="motivatesMe">What motivates me:</label>
-            <input
-              id="motivatesMe"
-              name="motivatesMe"
-              type="text"
-              placeholder="What motivates me"
-              value={this.state.motivatesMe}
-              onChange={this.handleOnChange}
-            />
-
-            <label htmlFor="favoriteQuote">Favorite quote:</label>
-            <input
-              id="favoriteQuote"
-              name="favoriteQuote"
-              type="text"
-              placeholder="Favorite quote"
-              value={this.state.favoriteQuote}
-              onChange={this.handleOnChange}
-            />
-
-            <label htmlFor="joinedOn">Joined on:</label>
-            <input
-              id="joinedOn"
-              name="joinedOn"
-              type="text"
-              placeholder="Joined on"
-              value={this.state.joinedOn}
-              onChange={this.handleOnChange}
-            />
+            {inputField}
             <div className="form-submit">
               <button
                 className="button-save"
@@ -239,22 +219,21 @@ class EditStudent extends Component {
     );
   }
 }
-
+EditStudent.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  type: PropTypes.string,
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired
+};
 const mapStateToProps = state => {
   return {
     students: state
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    handleSubmit: payload => {
-      dispatch({ type: "UPDATE_STUDENT", payload });
-    }
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { updateStudent }
 )(EditStudent);

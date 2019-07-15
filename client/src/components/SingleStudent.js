@@ -1,26 +1,16 @@
 import React, { Component } from "react";
 import { Link, NavLink } from "react-router-dom";
-import loader from "./assets/loader.gif";
-import "./App.css";
+import PropTypes from "prop-types";
+import loader from "../assets/loader.gif";
+import "../App.css";
 import { connect } from "react-redux";
+import { deleteStudent } from "../store/actions";
 
 class SingleStudent extends Component {
   handleDelete = e => {
     const removedId = this.props.myId;
-    fetch(`/api/${removedId}`, {
-      method: "delete"
-    })
-      .then(res => {
-        console.log("this is res", res);
-      })
-      .catch(err => {
-        alert(err);
-      });
-    this.props.handleRemove(removedId);
-    setTimeout(function() {
-      alert("Your information has been deleted!");
-    }, 500);
-    this.props.history.push("/");
+    const history = this.props.history;
+    this.props.deleteStudent(removedId, history);
   };
 
   render() {
@@ -96,25 +86,17 @@ class SingleStudent extends Component {
     );
   }
 }
-
+SingleStudent.propTypes = {
+  myId: PropTypes.string,
+  handleDelete: PropTypes.func.isRequired
+};
 const mapStateToProps = state => {
   return {
     students: state
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    handleRemove: removed => {
-      dispatch({
-        type: "DELETE_STUDENT",
-        id: removed
-      });
-    }
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { deleteStudent }
 )(SingleStudent);

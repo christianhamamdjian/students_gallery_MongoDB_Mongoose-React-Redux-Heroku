@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link, NavLink } from "react-router-dom";
-import loader from "./assets/loader.gif";
-import "./App.css";
+import PropTypes from "prop-types";
+import loader from "../assets/loader.gif";
+import "../App.css";
 import { connect } from "react-redux";
 
 class StudentsGallery extends Component {
@@ -37,8 +38,6 @@ class StudentsGallery extends Component {
                       </h2>
                       <h3 className="title">{student.title}</h3>
                     </div>
-
-                    {/* <i className="fa fa-lg fa-info-circle" aria-hidden="true" /> */}
                   </div>
                 </li>
               </Link>
@@ -49,6 +48,9 @@ class StudentsGallery extends Component {
     );
   }
 }
+StudentsGallery.propTypes = {
+  students: PropTypes.object.isRequired
+};
 const mapStateToProps = state => {
   return { students: state };
 };
