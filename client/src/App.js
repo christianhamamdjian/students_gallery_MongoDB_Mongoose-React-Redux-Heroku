@@ -1,85 +1,24 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  NavLink
-} from "react-router-dom";
-import integrifyLogo from "./assets/integrify_logo.png";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { connect } from "react-redux";
-
-import NewStudent from "./components/NewStudent";
-import SingleStudent from "./components/SingleStudent";
-import StudentsGallery from "./components/StudentsGallery";
-import EditStudent from "./components/EditStudent";
-import { getStudents } from "./store/actions";
-
-const NotFound = () => {
-  return <h2> The page was not found</h2>;
-};
+import Main from "./components/Main";
+import { getStudents } from "./store/actions/studentActions";
+import { loadUser } from "./store/actions/authActions";
+import store from "./store/store";
+import { Provider } from "react-redux";
 
 class App extends Component {
   componentDidMount() {
-    this.props.getStudents();
+    store.dispatch(loadUser());
+    store.dispatch(getStudents());
   }
-
   render() {
     return (
-      <div className="App">
-        <Router>
-          <div>
-            <div className="header">
-              <NavLink to="/">
-                <img alt="" src={integrifyLogo} />
-              </NavLink>
-              <h1>Students Gallery</h1>
-            </div>
-            <Switch>
-              <Route
-                exact
-                strict
-                path="/"
-                render={props => <StudentsGallery {...props} />}
-              />
-              <Route
-                exact
-                strict
-                path="/new-student"
-                render={props => <NewStudent {...props} />}
-              />
-              <Route
-                exact
-                strict
-                path="/students/:studentId"
-                render={props => (
-                  <SingleStudent
-                    {...props}
-                    myId={props.match.params.studentId}
-                  />
-                )}
-              />
-              <Route
-                exact
-                strict
-                path="/students/edit/:studentId"
-                render={props => (
-                  <EditStudent {...props} myId={props.match.params.studentId} />
-                )}
-              />
-              <Route component={NotFound} />
-            </Switch>
-          </div>
-        </Router>
-      </div>
+      <Provider store={store}>
+        <Main />
+      </Provider>
     );
   }
 }
-const mapStateToProps = state => {
-  return { students: state };
-};
 
-export default connect(
-  mapStateToProps,
-  { getStudents }
-)(App);
+export default App;

@@ -1,1 +1,1 @@
-Students gallery CRUD app using React, Redux, Node.Js, Express, Mlab and Cloudinary
+App X CRUD app using React, Redux, Node.Js, Express, Mlab and Cloudinary
