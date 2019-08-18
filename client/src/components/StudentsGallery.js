@@ -184,8 +184,8 @@ class StudentsGallery extends Component {
         // Show the list
         <TransitionGroup className="gallery">
           {visibleItems.map((stud, _id) => (
-            <CSSTransition key={_id} timeout={50} classNames="fade">
-              <InfoCard
+            <CSSTransition timeout={500} classNames="fade">
+              <InfoCard key={stud._id}
                 firstName={stud.firstName}
                 lastName={stud.lastName}
                 myId={stud._id}

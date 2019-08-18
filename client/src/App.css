@@ -9,9 +9,17 @@ body {
 #loader {
   text-align: center;
 }
+a {
+  text-decoration: none;
+  color: #fff;
+}
+a:hover {
+  text-decoration: none;
+  color: rgb(175, 175, 175);
+}
 .my-filter {
-  margin: 0px auto 40px;
-  padding: 20px 40px;
+  padding: 20px 0px;
+  margin-bottom: 20px;
   background: rgba(0, 0, 0, 0.2);
   width: 100%;
   text-align: center;
@@ -88,6 +96,14 @@ li {
 button {
   margin: 5px 3px;
 }
+.btn-secondary {
+  padding: 4px 20px 5px 10px;
+  color:#6a6b6b;
+  background-color: #939393;
+}
+.btn-secondary:hover {
+  background-color: #3131318e;
+}
 input {
   margin: 15px 10px;
 }
@@ -112,7 +128,7 @@ i.sort-desc {
   border-right: 3px solid transparent;
   pointer-events: none;
   bottom: 8px;
-  border-bottom: 6px solid rgb(0, 0, 0);
+  border-bottom: 6px solid rgb(255, 255, 255);
 }
 .sort-desc:after {
   position: absolute;
@@ -126,7 +142,7 @@ i.sort-desc {
   border-right: 3px solid transparent;
   pointer-events: none;
   bottom: 0;
-  border-top: 6px solid rgb(0, 0, 0);
+  border-top: 6px solid rgb(255, 255, 255);
 }
 .pagination-arrow {
   position: relative;
@@ -142,6 +158,15 @@ i.sort-desc {
   text-align: center;
   font-weight: bold;
 }
+.modal-content img {
+  width: 40%;
+  float: left;
+}
+.modal-content h2,
+.modal-content p {
+  width: 55%;
+  float: right;
+}
 .my-modal-main {
   position: fixed;
   background: white;
@@ -151,8 +176,24 @@ i.sort-desc {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
 .modal-dialog {
   max-width: 70%;
   margin: 1.75rem auto;
+}
+.modal-body, .modal-content{
+  padding: 1rem;
+  background-color:transparent;
+}
+.modal-content{
+  background-color:rgba(255, 255, 255, 0.966);
+}
+.card-img-wrapper{
+  width:100%;
+  height:100%;
+  overflow: hidden;
+}
+#my-input{
+  margin:6px;
+  border-radius: 6px;
+  padding: 2px 6px;
 }

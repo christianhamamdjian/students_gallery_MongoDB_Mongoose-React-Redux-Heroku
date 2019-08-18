@@ -3,11 +3,12 @@ import {
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
+  // NavbarBrand,
   Nav,
   NavItem,
   Container
 } from "reactstrap";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import RegisterModal from "./auth/RegisterModal";
@@ -40,9 +41,7 @@ class AppNavbar extends Component {
             <strong>{user ? `Welcome ${user.name}` : ""}</strong>
           </span>
         </NavItem>
-        <NavItem>
           <NewStudentModal />
-        </NavItem>
         <NavItem>
           <Logout />
         </NavItem>
@@ -62,11 +61,13 @@ class AppNavbar extends Component {
 
     return (
       <div>
-        <Navbar color="dark" dark expand="sm" className="mb-0">
+        <Navbar color="" expand="sm" className="mb-0">
           <Container>
-            <NavbarBrand href="/">
-              <h1>App X</h1>
-            </NavbarBrand>
+            {/* <NavbarBrand> */}
+              <Link to='/'>
+              <h1>UNICORNS</h1>
+              </Link>
+            {/* </NavbarBrand> */}
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>

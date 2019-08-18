@@ -31,7 +31,7 @@ class StudentModal extends Component {
               <div className="subhead" />
               <div className="student-info">
                 <div className="student-info-img">
-                  <img width="100%" alt="" src={selectedStudent.src} />
+                  <img alt="" src={selectedStudent.src} />
                 </div>
                 <div className="student-info-text">
                   <h2>

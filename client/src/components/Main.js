@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../App.css";
 import StudentsGallery from "./StudentsGallery";
@@ -15,7 +15,7 @@ class Main extends Component {
     return (
       <div className="App">
         <Router>
-          <div>
+          <Fragment>
             <div className="header">
               <AppNavbar />
             </div>
@@ -24,7 +24,7 @@ class Main extends Component {
 
               <Route component={NotFound} />
             </Switch>
-          </div>
+          </Fragment>
         </Router>
       </div>
     );

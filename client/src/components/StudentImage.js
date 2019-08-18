@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Modal, ModalHeader, ModalBody, CardImg } from "reactstrap";
 import PropTypes from "prop-types";
 
@@ -21,12 +21,12 @@ class StudentModal extends Component {
     )[0];
     const src = selectedStudent.src;
     return (
-      <div>
+      <Fragment>
         <div style={{ cursor: "pointer" }} onClick={this.toggle}>
           <CardImg
             top
             width="100%"
-            height="180px"
+            height="auto"
             src={src}
             alt="Card image cap"
           />
@@ -38,7 +38,7 @@ class StudentModal extends Component {
               <div className="subhead" />
               <div className="student-info">
                 <div className="student-info-img">
-                  <img width="300" alt="" src={selectedStudent.src} />
+                  <img alt="" src={selectedStudent.src} />
                 </div>
                 <div className="student-info-text">
                   <h2>
@@ -53,7 +53,7 @@ class StudentModal extends Component {
             </div>
           </ModalBody>
         </Modal>
-      </div>
+      </Fragment>
     );
   }
 }

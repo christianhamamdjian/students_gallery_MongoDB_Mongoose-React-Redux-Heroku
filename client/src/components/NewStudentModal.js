@@ -80,12 +80,12 @@ class NewStudentModal extends Component {
           style={{ marginBottom: "2rem" }}
           onClick={this.toggle}
         >
-          Add newStudent
+          Add a UNICORN
         </Button>
 
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>
-            Add to students gallery
+            ADD TO UNICORN GALLERY
           </ModalHeader>
           <ModalBody>
             <div className="subhead" />
@@ -122,7 +122,7 @@ class NewStudentModal extends Component {
                     value={this.state.lastName}
                     onChange={this.handleOnChange}
                   />
-                  <Label htmlFor="message">Message:</Label>
+                  <Label htmlFor="message">Info:</Label>
                   <Input
                     id="message"
                     name="message"

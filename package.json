@@ -1,6 +1,10 @@
 {
   "name": "nodejs_application",
   "version": "1.0.0",
+  "engines": {
+    "node": "10.x",
+    "npm": "6.x"
+  },
   "description": "Using NodeJS, Express, React and Redux to build a student info gallery",
   "main": "server.js",
   "scripts": {
@@ -11,9 +15,10 @@
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
-    "homepage": "https://pacific-tor-15082.herokuapp.com",
-    "nodemon": "^1.18.4"
+    "homepage": "https://pacific-tor-15082.herokuapp.com"
   },
+  "author": "Christian Hamamdjian",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.3.1",
@@ -26,6 +31,7 @@
     "multer": "^1.3.1"
   },
   "devDependencies": {
-    "dotenv": "^6.0.0"
+    "dotenv": "^6.0.0",
+    "nodemon": "^1.18.4"
   }
 }

@@ -122,12 +122,12 @@ class EditStudentModal extends Component {
                     value={this.state.lastName}
                     onChange={this.handleOnChange}
                   />
-                  <Label htmlFor="message">Message:</Label>
+                  <Label htmlFor="message">Info:</Label>
                   <Input
                     id="message"
                     name="message"
                     type="textarea"
-                    placeholder="Message"
+                    placeholder="Info"
                     value={this.state.message}
                     onChange={this.handleOnChange}
                   />
