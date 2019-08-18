@@ -1,10 +1,6 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "engines": {
-    "node": "10.x",
-    "npm": "6.x"
-  },
   "private": true,
   "dependencies": {
     "axios": "^0.19.0",
@@ -26,8 +22,6 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "author": "Christian Hamamdjian",
-  "license": "MIT",
   "proxy": "http://localhost:8080/",
   "browserslist": [
     ">0.2%",

@@ -3,6 +3,8 @@ const router = express.Router();
 const cloudinary = require("cloudinary");
 const multer = require("multer");
 
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
+
 // Multer
 const upload = multer({
   dest: "public/images/",

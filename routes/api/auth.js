@@ -5,6 +5,8 @@ const config = require("config");
 const jwt = require("jsonwebtoken");
 const auth = require("../../middleware/auth");
 
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
+
 // User Model
 const User = require("../../models/User");
 
