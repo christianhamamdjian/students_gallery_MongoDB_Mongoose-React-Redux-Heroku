@@ -2,9 +2,6 @@ const express = require("express");
 const router = express.Router();
 const cloudinary = require("cloudinary");
 const multer = require("multer");
-const config = require("config");
-
-if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
 // Multer
 const upload = multer({

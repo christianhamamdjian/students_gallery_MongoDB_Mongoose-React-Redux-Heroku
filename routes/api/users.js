@@ -4,8 +4,6 @@ const bcrypt = require("bcryptjs");
 const config = require("config");
 const jwt = require("jsonwebtoken");
 
-if (process.env.NODE_ENV !== "production") require("dotenv").config();
-
 // User Model
 const User = require("../../models/User");
 
