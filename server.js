@@ -9,13 +9,13 @@ const users = require("./routes/api/users");
 const auth = require("./routes/api/auth");
 
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
-
+const db = process.env.MONGODB;
 // Bodyparser Middleware
 app.use(express.json());
 
 // Connect to Mongo
 mongoose
-  .connect(process.env.MONGODB, {
+  .connect(db, {
     useNewUrlParser: true,
     useCreateIndex: true
   }) // Adding new mongo url parser
