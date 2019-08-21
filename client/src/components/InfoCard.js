@@ -33,7 +33,7 @@ class InfoCard extends Component {
     } = this.props;
     return (
       <ListGroupItem>
-        <Card style={{height:"320px"}}>
+        <Card>
           <div className='card-img-wrapper'>
           <StudentImage myId={myId} src={src} items={items} />
           </div>
