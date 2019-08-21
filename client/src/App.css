@@ -32,7 +32,7 @@ a:hover {
 .fa {
   color: #aeaeae;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
 }
 .fas:hover,
 .fa:hover {
@@ -50,26 +50,12 @@ a:hover {
   height: 320px;
   width: 300px;
 }
-/* .card-temp {
-  max-width: 100%;
-  max-height: 120px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 5%;
-  overflow: hidden;
-}
-.card-img-top{
-  width:60%;
-} */
 .card-img-wrapper{
   width:100%;
   height:100%;
   overflow: hidden;
 }
 .card-text {
-  /* display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 5%; */
   font-weight: bold;
 }
 .card-info {
@@ -77,35 +63,27 @@ a:hover {
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 5%;
 }
-
 .list-group-item {
   position: relative;
   display: block;
-  padding: 0.75rem 1.25rem;
-  margin-bottom: -1px;
-  background-color: rgba(0, 0, 0, 0.125);
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 0rem 0rem;
+  margin-bottom: 8px;
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0);
 }
 li {
   list-style: none;
 }
-.remove-btn {
-  margin-right: 0.5rem;
-}
-
 .fade-enter {
   opacity: 0.01;
 }
-
 .fade-enter-active {
   opacity: 1;
   transition: opacity 1000ms ease-in;
 }
-
 .fade-exit {
   opacity: 1;
 }
-
 .fade-exit-active {
   opacity: 0.01;
   transition: opacity 1000ms ease-out;
@@ -212,3 +190,22 @@ i.sort-desc {
 .navbar-text{
 color:#aeaeae;
 }
+@media screen and (max-width: 768px) {
+  .card {
+    padding:10px;
+    min-width: 400px;
+    max-width: 500px;
+    min-height: 125px;
+    max-height: 125px;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-gap: .3rem;
+    overflow: hidden;
+    justify-content: space-around;
+  }
+  .card-body {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 5%;
+  }
+  }

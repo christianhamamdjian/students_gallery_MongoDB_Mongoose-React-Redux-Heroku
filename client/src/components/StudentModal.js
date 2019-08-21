@@ -21,7 +21,7 @@ class StudentModal extends Component {
     )[0];
     return (
       <div>
-        <Button color="dark" onClick={this.toggle}>
+        <Button color="dark" size="sm" onClick={this.toggle}>
           <i className="fas fa-eye" />
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>

@@ -48,14 +48,16 @@ class InfoCard extends Component {
               {isAuthenticated ? (
                 <Fragment>
                   <EditStudentModal myId={myId} />
+                  <div>
                   <Button
-                    className="remove-btn"
+                    className="btn btn-danger"
                     color="danger"
                     size="sm"
                     onClick={handleDelete}
                   >
                     <i className="fas fa-trash" />
                   </Button>
+                  </div>
                 </Fragment>
               ) : null}
             </div>

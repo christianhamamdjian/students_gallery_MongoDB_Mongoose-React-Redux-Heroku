@@ -60,7 +60,7 @@ class AppNavbar extends Component {
 
     return (
       <div>
-        <Navbar color="" expand="sm" className="mb-0">
+        <Navbar color="" dark expand="sm" className="mb-0">
           <Container>
             {/* <NavbarBrand> */}
               <Link to='/'>

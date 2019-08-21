@@ -81,7 +81,7 @@ class EditStudentModal extends Component {
     return (
       <div>
         {this.props.isAuthenticated ? (
-          <Button color="dark" onClick={this.toggle}>
+          <Button color="dark" size="sm" onClick={this.toggle}>
             <i className="fas fa-edit" />
           </Button>
         ) : null}
