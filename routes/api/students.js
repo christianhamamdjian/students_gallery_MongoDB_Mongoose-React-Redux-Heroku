@@ -83,6 +83,7 @@ router.post("/api/newstudent", upload.single("photo"), (req, res) => {
     lastName: req.body.lastName,
     message: req.body.message
   };
+
   if (req.file) {
     fileName = req.file.filename;
     cloudinary.uploader.upload(req.file.path, function(result) {
@@ -112,7 +113,8 @@ router.post("/api/newstudent", upload.single("photo"), (req, res) => {
     const newStudent = new Student({
       ...newStudentBase,
       photo: "",
-      src: "",
+      // src: "",
+      src: "/images/img-placeholder.png",
       alt: "",
       photoId: ""
     });
