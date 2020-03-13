@@ -13,3 +13,6 @@ export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const GET_ERRORS = "GET_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const SEARCH_RESULT = "SEARCH_RESULT";
+export const PREVIOUS_PAGE = "PREVIOUS_PAGE";
+export const NEXT_PAGE = "NEXT_PAGE";

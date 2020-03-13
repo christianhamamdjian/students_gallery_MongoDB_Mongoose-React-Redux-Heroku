@@ -40,7 +40,7 @@ class AppNavbar extends Component {
             <strong>{user ? `Welcome ${user.name}` : ""}</strong>
           </span>
         </NavItem>
-          <NewStudentModal />
+        <NewStudentModal />
         <NavItem>
           <Logout />
         </NavItem>
@@ -63,9 +63,9 @@ class AppNavbar extends Component {
         <Navbar color="" dark expand="sm" className="mb-0">
           <Container>
             {/* <NavbarBrand> */}
-              <Link to='/'>
-              <h1>UNICORNS</h1>
-              </Link>
+            <Link to="/">
+              <h1>DEV TEAM</h1>
+            </Link>
             {/* </NavbarBrand> */}
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
@@ -84,7 +84,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  null
-)(AppNavbar);
+export default connect(mapStateToProps, null)(AppNavbar);

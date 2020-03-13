@@ -4,131 +4,101 @@ import { connect } from "react-redux";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Container, ListGroup, Spinner } from "reactstrap";
 import "../App.css";
-// import Spinner from "./filters/Spinner";
-import { deleteStudent } from "../store/actions/studentActions";
+import { searchResult, deleteStudent } from "../store/actions/studentActions";
 import Pagination from "./filters/Pagination";
 import Search from "./filters/Search";
 import Sorting from "./filters/Sorting";
 import InfoCard from "./InfoCard";
 
 class StudentsGallery extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: [],
-      input: "",
-      page: 0,
-      currentPage: null,
-      itemsPerPage: 3,
-      numberOfPages: 0,
-      sortAscFn: true,
-      sortDescFn: false,
-      sortAscLn: true,
-      sortDescLn: false
-    };
-  }
+  state = {
+    input: "",
+    sortAscFn: true,
+    sortDescFn: false,
+    sortAscLn: true,
+    sortDescLn: false
+  };
 
-  // Search
   onChangeHandler = e => {
-    this.setState({
-      input: e.target.value,
-      items: this.itemsFilter(e.target.value),
-      currentPage: 0
-    });
-  };
-  itemsFilter = input => {
-    const { students } = this.props;
-    return input
-      ? students.filter(item =>
-          item.firstName.toLowerCase().includes(input.toLowerCase())
-        )
-      : students;
-  };
-
-  // Previous Page
-  showPreviousPage = () => {
-    const { currentPage } = this.state;
-    if (currentPage >= 1) {
-      this.setState(() => ({
-        // limit the page number to no less than 0
-        currentPage: currentPage - 1
-      }));
-    }
-  };
-
-  // Next Page
-  showNextPage = () => {
-    const { currentPage, itemsPerPage } = this.state;
-    let { numberOfPages } = this.state;
-    numberOfPages = Math.floor(this.props.students.length / itemsPerPage);
-    if (currentPage <= numberOfPages) {
-      this.setState(() => ({
-        // limit the page number to no greater than 2
-        currentPage: currentPage + 1
-      }));
-    }
+    let input = e.target.value;
+    const { searchResult } = this.props;
+    this.setState(
+      {
+        input: input
+      },
+      () => searchResult(input)
+    );
   };
 
   // Sorting
-  sortByFirstName = items => {
-    if (this.state.sortAscFn === false) {
-      // asc
-      this.setState({
-        items: items.sort(function(a, b) {
-          if (a.firstName < b.firstName) return -1;
-          if (a.firstName > b.firstName) return 1;
-          return 0;
-        }),
-        sortAscLn: false,
-        sortDescLn: false,
-        sortAscFn: true,
-        sortDescFn: false
-      });
-    } else if (this.state.sortAscFn === true) {
-      // desc
-      this.setState({
-        items: items.sort(function(a, b) {
-          if (a.firstName < b.firstName) return 1;
-          if (a.firstName > b.firstName) return -1;
-          return 0;
-        }),
-        sortAscLn: false,
-        sortDescLn: false,
-        sortAscFn: false,
-        sortDescFn: true
-      });
+  sortList = sorting => {
+    let original = this.props.students;
+    let filtered = this.props.filteredlist;
+    let sortables = filtered.length === 0 ? original : filtered;
+    console.log(sortables);
+    switch (sorting) {
+      case "firstName":
+        if (this.state.sortAscFn === false) {
+          // asc
+          sortables.sort(function(a, b) {
+            if (a.firstName < b.firstName) return -1;
+            if (a.firstName > b.firstName) return 1;
+            return 0;
+          });
+          this.setState({
+            sortAscLn: false,
+            sortDescLn: false,
+            sortAscFn: true,
+            sortDescFn: false
+          });
+        } else if (this.state.sortAscFn === true) {
+          // desc
+          sortables.sort(function(a, b) {
+            if (a.firstName < b.firstName) return 1;
+            if (a.firstName > b.firstName) return -1;
+            return 0;
+          });
+          this.setState({
+            sortAscLn: false,
+            sortDescLn: false,
+            sortAscFn: false,
+            sortDescFn: true
+          });
+        }
+        break;
+      case "lastName":
+        // asc
+        if (this.state.sortAscLn === false) {
+          sortables.sort(function(a, b) {
+            if (a.lastName < b.lastName) return -1;
+            if (a.lastName > b.lastName) return 1;
+            return 0;
+          });
+          this.setState({
+            sortAscFn: false,
+            sortDescFn: false,
+            sortAscLn: true,
+            sortDescLn: false
+          });
+        } else if (this.state.sortAscLn === true) {
+          // desc
+          sortables.sort(function(a, b) {
+            if (a.lastName < b.lastName) return 1;
+            if (a.lastName > b.lastName) return -1;
+            return 0;
+          });
+          this.setState({
+            sortAscFn: false,
+            sortDescFn: false,
+            sortAscLn: false,
+            sortDescLn: true
+          });
+        }
+        break;
+      default:
+        return;
     }
   };
-  sortByLastName = items => {
-    // asc
-    if (this.state.sortAscLn === false) {
-      this.setState({
-        items: items.sort(function(a, b) {
-          if (a.lastName < b.lastName) return -1;
-          if (a.lastName > b.lastName) return 1;
-          return 0;
-        }),
-        sortAscFn: false,
-        sortDescFn: false,
-        sortAscLn: true,
-        sortDescLn: false
-      });
-    } else if (this.state.sortAscLn === true) {
-      // desc
-      this.setState({
-        items: items.sort(function(a, b) {
-          if (a.lastName < b.lastName) return 1;
-          if (a.lastName > b.lastName) return -1;
-          return 0;
-        }),
-        sortAscFn: false,
-        sortDescFn: false,
-        sortAscLn: false,
-        sortDescLn: true
-      });
-    }
-  };
-
   // CRUD Delete
   handleDelete = (stud, _id) => {
     const { deleteStudent } = this.props;
@@ -139,44 +109,32 @@ class StudentsGallery extends Component {
 
   render() {
     // Get Array From Store
-    const { students, loading } = this.props;
+    let {
+      students,
+      loading,
+      filteredlist,
+      currentPage,
+      itemsPerPage
+    } = this.props;
+
     // Get State Variables
-    const {
-      items,
-      input,
-      itemsPerPage,
-      sortAscFn,
-      sortDescFn,
-      sortAscLn,
-      sortDescLn
-    } = this.state;
-
-    let { numberOfPages, currentPage } = this.state;
-
-    // Get Number Of Pages
-    numberOfPages =
-      input !== ""
-        ? // Calculate the Number of Pages from the State's Items
-          Math.floor(items.length / itemsPerPage)
-        : // Calculate the Number of Pages from the Props's Students
-          Math.floor(students.length / itemsPerPage);
+    const { input, sortAscFn, sortDescFn, sortAscLn, sortDescLn } = this.state;
 
     // Start Page
     const firstItemIndex = currentPage * itemsPerPage;
 
     // Items displayed per Page
     const visibleItems =
-      input !== "" && items.length !== 0
-        ? // Calculate The Page Visible Items from the State's Items
-          items.slice(firstItemIndex, firstItemIndex + itemsPerPage)
-        : // Calculate The Page Visible Items from the Props's Students
-        input !== "" && items.length === 0
+      input !== "" && filteredlist.length !== 0
+        ? filteredlist.slice(firstItemIndex, firstItemIndex + itemsPerPage)
+        : input !== "" && filteredlist.length === 0
         ? []
         : students.slice(firstItemIndex, firstItemIndex + itemsPerPage);
+
     // Build Cards List
     const cardsList =
       // If no input or Loading is true show spinner
-      (input !== "" && items.length === 0) || loading ? (
+      (input !== "" && filteredlist.length === 0) || loading ? (
         <div style={{ margin: "0 auto" }}>
           <Spinner color="light" />
         </div>
@@ -185,7 +143,8 @@ class StudentsGallery extends Component {
         <TransitionGroup className="gallery">
           {visibleItems.map((stud, _id) => (
             <CSSTransition key={_id} timeout={500} classNames="fade">
-              <InfoCard key={stud._id}
+              <InfoCard
+                key={stud._id}
                 firstName={stud.firstName}
                 lastName={stud.lastName}
                 myId={stud._id}
@@ -208,8 +167,8 @@ class StudentsGallery extends Component {
 
           {/* Sorting */}
           <Sorting
-            sortByFirstName={() => this.sortByFirstName(students)}
-            sortByLastName={() => this.sortByLastName(students)}
+            sortByFirstName={() => this.sortList("firstName")}
+            sortByLastName={() => this.sortList("lastName")}
             sortAscFn={sortAscFn}
             sortDescFn={sortDescFn}
             sortAscLn={sortAscLn}
@@ -217,12 +176,7 @@ class StudentsGallery extends Component {
           />
 
           {/* Pagination */}
-          <Pagination
-            currentPage={currentPage}
-            numberOfPages={numberOfPages}
-            showPreviousPage={this.showPreviousPage}
-            showNextPage={this.showNextPage}
-          />
+          <Pagination />
         </div>
         <Container>
           <ListGroup>
@@ -240,10 +194,16 @@ StudentsGallery.propTypes = {
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   students: state.student.students,
+  filteredlist: state.student.filteredlist,
+  itemsPerPage: state.student.itemsPerPage,
+  currentPage: state.student.currentPage,
+  numberOfPages: state.student.numberOfPages,
   loading: state.student.loading
 });
-
-export default connect(
-  mapStateToProps,
-  { deleteStudent }
-)(StudentsGallery);
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteStudent: id => dispatch(deleteStudent(id)),
+    searchResult: input => dispatch(searchResult(input))
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(StudentsGallery);

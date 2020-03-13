@@ -3,10 +3,17 @@ import {
   ADD_STUDENT,
   DELETE_STUDENT,
   UPDATE_STUDENT,
-  STUDENTS_LOADING
+  STUDENTS_LOADING,
+  SEARCH_RESULT,
+  PREVIOUS_PAGE,
+  NEXT_PAGE
 } from "../actions/types";
 const initialState = {
   students: [],
+  filteredlist: [],
+  currentPage: 0,
+  itemsPerPage: 3,
+  // numberOfPages: null,
   loading: false
 };
 
@@ -17,8 +24,38 @@ export default function(state = initialState, action) {
         ...state,
         loading: true
       };
+    case SEARCH_RESULT:
+      if (!action.payload) {
+        return {
+          ...state,
+          students: state.students,
+          filteredlist: [],
+          currentPage: 0
+        };
+      } else {
+        return {
+          ...state,
+          filteredlist: state.students.filter(stud =>
+            stud.firstName
+              .toLowerCase()
+              .includes(action.payload.trim().toLowerCase())
+          ),
+          currentPage: 0
+        };
+      }
+    case PREVIOUS_PAGE:
+      return { ...state, currentPage: state.currentPage - 1 };
+
+    case NEXT_PAGE:
+      return { ...state, currentPage: state.currentPage + 1 };
+
     case GET_STUDENTS:
-      return { ...state, students: action.payload, loading: false };
+      return {
+        ...state,
+        students: action.payload,
+
+        loading: false
+      };
 
     case ADD_STUDENT:
       return { ...state, students: [...state.students, action.payload] };

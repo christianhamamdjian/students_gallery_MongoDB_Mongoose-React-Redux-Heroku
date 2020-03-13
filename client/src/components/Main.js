@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../App.css";
 import StudentsGallery from "./StudentsGallery";
 import AppNavbar from "./AppNavbar";
-import { getStudents } from "../store/actions/studentActions";
 import { connect } from "react-redux";
 
 const NotFound = () => {
@@ -21,7 +20,6 @@ class Main extends Component {
             </div>
             <Switch>
               <Route exact strict path="/" render={() => <StudentsGallery />} />
-
               <Route component={NotFound} />
             </Switch>
           </Fragment>
@@ -30,11 +28,8 @@ class Main extends Component {
     );
   }
 }
+
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  students: state.student.students
+  isAuthenticated: state.auth.isAuthenticated
 });
-export default connect(
-  mapStateToProps,
-  { getStudents }
-)(Main);
+export default connect(mapStateToProps)(Main);

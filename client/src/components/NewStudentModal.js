@@ -80,13 +80,11 @@ class NewStudentModal extends Component {
           style={{ marginBottom: "2rem" }}
           onClick={this.toggle}
         >
-          Add a UNICORN
+          Add a new DEV
         </Button>
 
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>
-            ADD TO UNICORN GALLERY
-          </ModalHeader>
+          <ModalHeader toggle={this.toggle}>ADD TO UNICORN GALLERY</ModalHeader>
           <ModalBody>
             <div className="subhead" />
             <div className="container">
@@ -156,7 +154,4 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(
-  mapStateToProps,
-  { newStudent }
-)(NewStudentModal);
+export default connect(mapStateToProps, { newStudent })(NewStudentModal);
