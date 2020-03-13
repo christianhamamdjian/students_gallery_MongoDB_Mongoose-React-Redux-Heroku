@@ -13,7 +13,6 @@ const initialState = {
   filteredlist: [],
   currentPage: 0,
   itemsPerPage: 3,
-  // numberOfPages: null,
   loading: false
 };
 
