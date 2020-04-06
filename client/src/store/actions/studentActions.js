@@ -1,3 +1,6 @@
+/*
+ * student actions
+ */
 import axios from "axios";
 import {
   GET_ERRORS,
@@ -6,31 +9,9 @@ import {
   ADD_STUDENT,
   UPDATE_STUDENT,
   DELETE_STUDENT,
-  STUDENTS_LOADING,
-  SEARCH_RESULT,
-  PREVIOUS_PAGE,
-  NEXT_PAGE
+  STUDENTS_LOADING
 } from "./types";
 
-// Search students
-export const searchResult = payload => {
-  return {
-    type: SEARCH_RESULT,
-    payload: payload
-  };
-};
-export const previousPage = payload => {
-  return {
-    type: PREVIOUS_PAGE,
-    payload: payload
-  };
-};
-export const nextPage = payload => {
-  return {
-    type: NEXT_PAGE,
-    payload: payload
-  };
-};
 // Get Posts
 export const getStudents = () => dispatch => {
   dispatch(setStudentsLoading());

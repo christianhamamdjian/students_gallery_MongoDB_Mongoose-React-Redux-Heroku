@@ -13,11 +13,7 @@ import InfoCard from "./InfoCard";
 
 class StudentsGallery extends Component {
   state = {
-    input: "",
-    sortAscFn: true,
-    sortDescFn: false,
-    sortAscLn: true,
-    sortDescLn: false
+    input: ""
   };
 
   onChangeHandler = e => {
@@ -31,75 +27,6 @@ class StudentsGallery extends Component {
     );
   };
 
-  // Sorting
-  sortList = sorting => {
-    let original = this.props.students;
-    let filtered = this.props.filteredlist;
-    let sortables = filtered.length === 0 ? original : filtered;
-    console.log(sortables);
-    switch (sorting) {
-      case "firstName":
-        if (this.state.sortAscFn === false) {
-          // asc
-          sortables.sort(function(a, b) {
-            if (a.firstName < b.firstName) return -1;
-            if (a.firstName > b.firstName) return 1;
-            return 0;
-          });
-          this.setState({
-            sortAscLn: false,
-            sortDescLn: false,
-            sortAscFn: true,
-            sortDescFn: false
-          });
-        } else if (this.state.sortAscFn === true) {
-          // desc
-          sortables.sort(function(a, b) {
-            if (a.firstName < b.firstName) return 1;
-            if (a.firstName > b.firstName) return -1;
-            return 0;
-          });
-          this.setState({
-            sortAscLn: false,
-            sortDescLn: false,
-            sortAscFn: false,
-            sortDescFn: true
-          });
-        }
-        break;
-      case "lastName":
-        // asc
-        if (this.state.sortAscLn === false) {
-          sortables.sort(function(a, b) {
-            if (a.lastName < b.lastName) return -1;
-            if (a.lastName > b.lastName) return 1;
-            return 0;
-          });
-          this.setState({
-            sortAscFn: false,
-            sortDescFn: false,
-            sortAscLn: true,
-            sortDescLn: false
-          });
-        } else if (this.state.sortAscLn === true) {
-          // desc
-          sortables.sort(function(a, b) {
-            if (a.lastName < b.lastName) return 1;
-            if (a.lastName > b.lastName) return -1;
-            return 0;
-          });
-          this.setState({
-            sortAscFn: false,
-            sortDescFn: false,
-            sortAscLn: false,
-            sortDescLn: true
-          });
-        }
-        break;
-      default:
-        return;
-    }
-  };
   // CRUD Delete
   handleDelete = (stud, _id) => {
     const { deleteStudent } = this.props;
@@ -119,7 +46,7 @@ class StudentsGallery extends Component {
     } = this.props;
 
     // Get State Variables
-    const { input, sortAscFn, sortDescFn, sortAscLn, sortDescLn } = this.state;
+    const { input } = this.state;
 
     // Start Page
     const firstItemIndex = currentPage * itemsPerPage;
@@ -162,23 +89,6 @@ class StudentsGallery extends Component {
 
     return (
       <Fragment>
-        <div className="my-filter">
-          {/* Search */}
-          <Search onChangeHandler={this.onChangeHandler} input={input} />
-
-          {/* Sorting */}
-          <Sorting
-            sortByFirstName={() => this.sortList("firstName")}
-            sortByLastName={() => this.sortList("lastName")}
-            sortAscFn={sortAscFn}
-            sortDescFn={sortDescFn}
-            sortAscLn={sortAscLn}
-            sortDescLn={sortDescLn}
-          />
-
-          {/* Pagination */}
-          <PaginationContainer />
-        </div>
         <Container>
           <ListGroup>
             {/* Cards List Gallery */}

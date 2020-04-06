@@ -16,3 +16,5 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const SEARCH_RESULT = "SEARCH_RESULT";
 export const PREVIOUS_PAGE = "PREVIOUS_PAGE";
 export const NEXT_PAGE = "NEXT_PAGE";
+export const SORT_BY_FIRST_NAME = "SORT_BY_FIRST_NAME";
+export const SORT_BY_LAST_NAME = "SORT_BY_LAST_NAME";

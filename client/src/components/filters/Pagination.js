@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "reactstrap";
 import { connect } from "react-redux";
-import { nextPage, previousPage } from "../../store/actions/studentActions";
+import { nextPage, previousPage } from "../../store/actions/filtersActions";
 
 class Pagination extends Component {
   render() {
@@ -15,7 +15,7 @@ class Pagination extends Component {
     } = this.props;
 
     let numberOfPages =
-      filteredlist.length > 0
+      this.props.filteredlist.length > 0
         ? Math.ceil(filteredlist.length / itemsPerPage) - 1
         : Math.ceil(students.length / itemsPerPage) - 1;
 
@@ -65,18 +65,4 @@ class Pagination extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  students: state.student.students,
-  filteredlist: state.student.filteredlist,
-  currentPage: state.student.currentPage,
-  itemsPerPage: state.student.itemsPerPage,
-  loading: state.student.loading
-});
-const mapDispatchToProps = dispatch => {
-  return {
-    nextPage: id => dispatch(nextPage(id)),
-    previousPage: id => dispatch(previousPage(id))
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Pagination);
+export default Pagination;
