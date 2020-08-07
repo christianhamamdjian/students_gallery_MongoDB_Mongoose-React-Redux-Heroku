@@ -7,7 +7,7 @@ import {
   Form,
   FormGroup,
   Label,
-  Input
+  Input,
 } from "reactstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -19,7 +19,7 @@ class EditStudentModal extends Component {
     super(props);
 
     const selectedStudent =
-      props.students.find(student => student._id === props.myId) || {};
+      props.students.find((student) => student._id === props.myId) || {};
 
     this.state = {
       modal: false,
@@ -29,25 +29,26 @@ class EditStudentModal extends Component {
       alt: selectedStudent.alt || "",
       firstName: selectedStudent.firstName || "",
       lastName: selectedStudent.lastName || "",
-      message: selectedStudent.message || ""
+      message: selectedStudent.message || "",
+      user: selectedStudent.user || "",
     };
   }
 
   static propTypes = {
-    isAuthenticated: PropTypes.bool
+    isAuthenticated: PropTypes.bool,
   };
 
   toggle = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleUpdate = e => {
+  handleUpdate = (e) => {
     e.preventDefault();
     const _id = this.props.myId;
     const newPhoto = this.state.photo;
@@ -60,16 +61,17 @@ class EditStudentModal extends Component {
     formData.append("firstName", this.state.firstName);
     formData.append("lastName", this.state.lastName);
     formData.append("message", this.state.message);
+    formData.append("user", this.state.user);
     this.props.updateStudent(formData, _id);
     // Close modal
     this.toggle();
   };
-  handleOnChange = e => {
+  handleOnChange = (e) => {
     const {
-      target: { value, name }
+      target: { value, name },
     } = e;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
   changePhoto(e) {
@@ -77,7 +79,7 @@ class EditStudentModal extends Component {
   }
   render() {
     const errors = utils.validate(this.state.firstName, this.state.lastName);
-    const isDisabled = Object.keys(errors).some(x => errors[x]);
+    const isDisabled = Object.keys(errors).some((x) => errors[x]);
     return (
       <div>
         {this.props.isAuthenticated ? (
@@ -99,7 +101,7 @@ class EditStudentModal extends Component {
                     name="photo"
                     type="file"
                     multiple="multiple"
-                    onChange={e => this.changePhoto(e)}
+                    onChange={(e) => this.changePhoto(e)}
                   />
                   <Label htmlFor="firstName">First name:</Label>
                   <Input
@@ -153,13 +155,11 @@ class EditStudentModal extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   student: state.student,
   students: state.student.students,
-  isAuthenticated: state.auth.isAuthenticated
+  userId: state.auth.user,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(
-  mapStateToProps,
-  { updateStudent }
-)(EditStudentModal);
+export default connect(mapStateToProps, { updateStudent })(EditStudentModal);

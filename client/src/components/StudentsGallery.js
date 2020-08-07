@@ -17,22 +17,22 @@ class StudentsGallery extends Component {
     sortAscFn: true,
     sortDescFn: false,
     sortAscLn: true,
-    sortDescLn: false
+    sortDescLn: false,
   };
 
-  onChangeHandler = e => {
+  onChangeHandler = (e) => {
     let input = e.target.value;
     const { searchResult, students } = this.props;
     this.setState(
       {
-        input: input
+        input: input,
       },
       () => searchResult(input, students)
     );
   };
 
   // Sorting
-  sortList = sorting => {
+  sortList = (sorting) => {
     let original = this.props.students;
     let filtered = this.props.filteredlist;
     let sortables = filtered.length === 0 ? original : filtered;
@@ -41,7 +41,7 @@ class StudentsGallery extends Component {
       case "firstName":
         if (this.state.sortAscFn === false) {
           // asc
-          sortables.sort(function(a, b) {
+          sortables.sort(function (a, b) {
             if (a.firstName < b.firstName) return -1;
             if (a.firstName > b.firstName) return 1;
             return 0;
@@ -50,11 +50,11 @@ class StudentsGallery extends Component {
             sortAscLn: false,
             sortDescLn: false,
             sortAscFn: true,
-            sortDescFn: false
+            sortDescFn: false,
           });
         } else if (this.state.sortAscFn === true) {
           // desc
-          sortables.sort(function(a, b) {
+          sortables.sort(function (a, b) {
             if (a.firstName < b.firstName) return 1;
             if (a.firstName > b.firstName) return -1;
             return 0;
@@ -63,14 +63,14 @@ class StudentsGallery extends Component {
             sortAscLn: false,
             sortDescLn: false,
             sortAscFn: false,
-            sortDescFn: true
+            sortDescFn: true,
           });
         }
         break;
       case "lastName":
         // asc
         if (this.state.sortAscLn === false) {
-          sortables.sort(function(a, b) {
+          sortables.sort(function (a, b) {
             if (a.lastName < b.lastName) return -1;
             if (a.lastName > b.lastName) return 1;
             return 0;
@@ -79,11 +79,11 @@ class StudentsGallery extends Component {
             sortAscFn: false,
             sortDescFn: false,
             sortAscLn: true,
-            sortDescLn: false
+            sortDescLn: false,
           });
         } else if (this.state.sortAscLn === true) {
           // desc
-          sortables.sort(function(a, b) {
+          sortables.sort(function (a, b) {
             if (a.lastName < b.lastName) return 1;
             if (a.lastName > b.lastName) return -1;
             return 0;
@@ -92,7 +92,7 @@ class StudentsGallery extends Component {
             sortAscFn: false,
             sortDescFn: false,
             sortAscLn: false,
-            sortDescLn: true
+            sortDescLn: true,
           });
         }
         break;
@@ -115,7 +115,7 @@ class StudentsGallery extends Component {
       loading,
       filteredlist,
       currentPage,
-      itemsPerPage
+      itemsPerPage,
     } = this.props;
 
     // Get State Variables
@@ -149,6 +149,7 @@ class StudentsGallery extends Component {
                 firstName={stud.firstName}
                 lastName={stud.lastName}
                 myId={stud._id}
+                user={stud.user}
                 src={stud.src}
                 handleDelete={() => {
                   this.handleDelete(stud, _id);
@@ -190,20 +191,20 @@ class StudentsGallery extends Component {
   }
 }
 StudentsGallery.propTypes = {
-  students: PropTypes.array.isRequired
+  students: PropTypes.array.isRequired,
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   students: state.student.students,
   filteredlist: state.filters.filteredlist,
   itemsPerPage: state.filters.itemsPerPage,
   currentPage: state.filters.currentPage,
-  loading: state.student.loading
+  loading: state.student.loading,
 });
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    deleteStudent: id => dispatch(deleteStudent(id)),
-    searchResult: (input, students) => dispatch(searchResult(input, students))
+    deleteStudent: (id) => dispatch(deleteStudent(id)),
+    searchResult: (input, students) => dispatch(searchResult(input, students)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(StudentsGallery);

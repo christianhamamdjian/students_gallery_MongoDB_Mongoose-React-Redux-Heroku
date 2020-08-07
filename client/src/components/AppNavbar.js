@@ -5,7 +5,7 @@ import {
   NavbarToggler,
   Nav,
   NavItem,
-  Container
+  Container,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -17,16 +17,16 @@ import Logout from "./auth/Logout";
 
 class AppNavbar extends Component {
   state = {
-    isOpen: false
+    isOpen: false,
   };
 
   static propTypes = {
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
   };
 
   toggle = () => {
     this.setState({
-      isOpen: !this.state.isOpen
+      isOpen: !this.state.isOpen,
     });
   };
 
@@ -80,8 +80,9 @@ class AppNavbar extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  userId: state.auth.user,
 });
 
 export default connect(mapStateToProps, null)(AppNavbar);

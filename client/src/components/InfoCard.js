@@ -19,7 +19,7 @@ class InfoCard extends Component {
     myId: PropTypes.string.isRequired,
     items: PropTypes.array.isRequired,
     handleDelete: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool
+    isAuthenticated: PropTypes.bool,
   };
   render() {
     const {
@@ -29,13 +29,16 @@ class InfoCard extends Component {
       myId,
       items,
       handleDelete,
-      isAuthenticated
+      isAuthenticated,
+      student,
+      user,
+      userId,
     } = this.props;
     return (
       <ListGroupItem>
         <Card>
-          <div className='card-img-wrapper'>
-          <StudentImage myId={myId} src={src} items={items} />
+          <div className="card-img-wrapper">
+            <StudentImage myId={myId} src={src} items={items} />
           </div>
           <CardBody>
             <div className="card-text">
@@ -45,18 +48,18 @@ class InfoCard extends Component {
             </div>
             <div className="card-info">
               <StudentModal myId={myId} items={items} />
-              {isAuthenticated ? (
+              {isAuthenticated && user === userId.id ? (
                 <Fragment>
                   <EditStudentModal myId={myId} />
                   <div>
-                  <Button
-                    className="btn btn-danger"
-                    color="danger"
-                    size="sm"
-                    onClick={handleDelete}
-                  >
-                    <i className="fas fa-trash" />
-                  </Button>
+                    <Button
+                      className="btn btn-danger"
+                      color="danger"
+                      size="sm"
+                      onClick={handleDelete}
+                    >
+                      <i className="fas fa-trash" />
+                    </Button>
                   </div>
                 </Fragment>
               ) : null}
@@ -68,12 +71,12 @@ class InfoCard extends Component {
   }
 }
 
-const mapStateToprops = state => ({
+const mapStateToprops = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  student: state.student
+  userId: state.auth.user,
+  student: state.student,
 });
 
-export default connect(
-  mapStateToprops,
-  { getStudents, deleteStudent }
-)(InfoCard);
+export default connect(mapStateToprops, { getStudents, deleteStudent })(
+  InfoCard
+);

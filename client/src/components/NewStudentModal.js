@@ -7,7 +7,7 @@ import {
   Form,
   FormGroup,
   Label,
-  Input
+  Input,
 } from "reactstrap";
 import { connect } from "react-redux";
 import { newStudent } from "../store/actions/studentActions";
@@ -26,11 +26,11 @@ class NewStudentModal extends Component {
       message: "",
       inFocus: "",
       modal: false,
-      name: ""
+      name: "",
     };
   }
 
-  handleSave = e => {
+  handleSave = (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("photo", this.state.photo);
@@ -39,18 +39,19 @@ class NewStudentModal extends Component {
     formData.append("firstName", this.state.firstName);
     formData.append("lastName", this.state.lastName);
     formData.append("message", this.state.message);
+    formData.append("user", this.props.userId._id);
 
     this.props.newStudent(formData);
     // Close modal
     this.toggle();
   };
 
-  handleOnChange = e => {
+  handleOnChange = (e) => {
     const {
-      target: { value, name }
+      target: { value, name },
     } = e;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
   changePhoto(e) {
@@ -58,16 +59,16 @@ class NewStudentModal extends Component {
   }
 
   static propTypes = {
-    isAuthenticated: PropTypes.bool
+    isAuthenticated: PropTypes.bool,
   };
 
   toggle = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -97,7 +98,7 @@ class NewStudentModal extends Component {
                     name="photo"
                     type="file"
                     multiple="multiple"
-                    onChange={e => this.changePhoto(e)}
+                    onChange={(e) => this.changePhoto(e)}
                   />
                   <Label htmlFor="firstName">First name:</Label>
                   <Input
@@ -149,9 +150,10 @@ class NewStudentModal extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   student: state.student,
-  isAuthenticated: state.auth.isAuthenticated
+  userId: state.auth.user,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { newStudent })(NewStudentModal);

@@ -2,17 +2,18 @@ const express = require("express");
 const router = express.Router();
 const cloudinary = require("cloudinary");
 const multer = require("multer");
+const auth = require("../../middleware/auth");
 
 // Multer
 const upload = multer({
   dest: "public/images/",
   limits: {
     fileSize: 5000000,
-    files: 1
+    files: 1,
   },
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     cb(null, file.originalname);
-  }
+  },
 });
 
 // @route   GET api/
@@ -20,13 +21,13 @@ const upload = multer({
 // @access  Public
 router.get("/", (req, res) => {
   Student.find().then(
-    doc => {
+    (doc) => {
       if (!doc) {
         return res.status(404).send("Not found");
       }
       res.send(doc);
     },
-    e => {
+    (e) => {
       res.status(400).send(e);
     }
   );
@@ -37,13 +38,13 @@ router.get("/", (req, res) => {
 // @access  Public
 router.get("/api/students", (req, res) => {
   Student.find().then(
-    doc => {
+    (doc) => {
       if (!doc) {
         return res.status(404).send("Not found");
       }
       res.send(doc);
     },
-    e => {
+    (e) => {
       res.status(400).send(e);
     }
   );
@@ -55,13 +56,13 @@ router.get("/api/students", (req, res) => {
 router.get("/api/students/:id", (req, res) => {
   const id = req.params.id;
   Student.findById(_id).then(
-    doc => {
+    (doc) => {
       if (!doc) {
         return res.status(404).send("Not Found");
       }
       res.send(doc);
     },
-    e => {
+    (e) => {
       res.status(400).send(e);
     }
   );
@@ -75,18 +76,20 @@ router.post("/api/newstudent", upload.single("photo"), (req, res) => {
   cloudinary.config({
     cloud_name: process.env.CLOUDNAME,
     api_key: process.env.APIKEY,
-    api_secret: process.env.APISECRET
+    api_secret: process.env.APISECRET,
   });
   let fileName = req.body.alt;
+
   const newStudentBase = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    message: req.body.message
+    message: req.body.message,
+    user: req.body.user,
   };
 
   if (req.file) {
     fileName = req.file.filename;
-    cloudinary.uploader.upload(req.file.path, function(result) {
+    cloudinary.uploader.upload(req.file.path, function (result) {
       let photoUrl = "/" + this.fileName;
       if (result.url) {
         photoUrl = result.url;
@@ -96,16 +99,16 @@ router.post("/api/newstudent", upload.single("photo"), (req, res) => {
         photo: req.file,
         src: photoUrl,
         alt: fileName,
-        photoId: result.public_id
+        photoId: result.public_id,
       });
       newStudent
         .save()
-        .then(doc => {
+        .then((doc) => {
           console.log("Saved");
           console.log(JSON.stringify(doc, undefined, 4));
           res.json(doc);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log("Unable to save", e);
         });
     });
@@ -116,16 +119,16 @@ router.post("/api/newstudent", upload.single("photo"), (req, res) => {
       // src: "",
       src: "/images/img-placeholder.png",
       alt: "",
-      photoId: ""
+      photoId: "",
     });
     newStudent
       .save()
-      .then(doc => {
+      .then((doc) => {
         // console.log("Saved");
         // console.log(JSON.stringify(doc, undefined, 4));
         res.json(doc);
       })
-      .catch(e => {
+      .catch((e) => {
         console.log("Unable to save", e);
       });
   }
@@ -139,17 +142,17 @@ router.put("/api/update/:id", upload.single("photo"), (req, res) => {
   cloudinary.config({
     cloud_name: process.env.CLOUDNAME,
     api_key: process.env.APIKEY,
-    api_secret: process.env.APISECRET
+    api_secret: process.env.APISECRET,
   });
   let fileName = req.body.alt;
   const newStudentBase = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    message: req.body.message
+    message: req.body.message,
   };
   if (req.file) {
     fileName = req.file.filename;
-    cloudinary.uploader.upload(req.file.path, function(result) {
+    cloudinary.uploader.upload(req.file.path, function (result) {
       let photoUrl = "/" + this.fileName;
       if (result.url) {
         photoUrl = result.url;
@@ -163,16 +166,16 @@ router.put("/api/update/:id", upload.single("photo"), (req, res) => {
           photo: req.file,
           src: photoUrl,
           alt: fileName,
-          photoId: result.public_id
+          photoId: result.public_id,
         },
         { new: true }
       )
-        .then(doc => {
+        .then((doc) => {
           console.log("Saved");
           console.log(JSON.stringify(doc, undefined, 4));
           res.json(doc);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log("Unable to save", e);
         });
     });
@@ -184,16 +187,16 @@ router.put("/api/update/:id", upload.single("photo"), (req, res) => {
         photo: "",
         src: req.body.src,
         alt: req.body.alt,
-        photoId: req.body.public_id
+        photoId: req.body.public_id,
       },
       { new: true }
     )
-      .then(doc => {
+      .then((doc) => {
         console.log("Saved");
         console.log(JSON.stringify(doc, undefined, 4));
         res.json(doc);
       })
-      .catch(e => {
+      .catch((e) => {
         console.log("Unable to save", e);
       });
   }
@@ -206,10 +209,10 @@ router.delete("/api/:id", (req, res) => {
   const id = req.params.id;
 
   Student.findByIdAndRemove(id).then(
-    doc => {
+    (doc) => {
       res.send(doc);
     },
-    e => {
+    (e) => {
       res.status(400).send(e);
     }
   );
